@@ -1,0 +1,36 @@
+name: Task Template
+description: Developer defined task.
+title: "[Task]: "
+labels: task
+body:
+- type: markdown
+  attributes:
+    value: |
+      # New Task
+- type: input
+  id: parent_pbi
+  attributes:
+    label: Parent Backlog Item
+    description: "Enter the issue number of the parent backlog item."
+    value: "#"
+  validations:
+    required: true
+- type: textarea
+  id: task_description
+  attributes:
+    label: Description of new task
+    description: "Describe with a sentence or two the task you're adding."
+  validations:
+    required: true
+- type: checkboxes
+  id: completed-manual-steps
+  attributes:
+    label: Required Manual Steps
+    description: "Confirm that these steps have been taken before new issue is created."
+    options:
+      - label: "Confirm title is filled out"
+        required: true
+      - label: "Additional labels added."
+        required: true
+      - label: "Confirm parent backlog item has correct issue id"
+        required: true
