@@ -1,3 +1,3 @@
 # FlexiCharge BMS
 
-TODO: fill this out with good stuff.
+TODO: fill this out with good stuff...
