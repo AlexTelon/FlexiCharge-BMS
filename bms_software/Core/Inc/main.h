@@ -31,7 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "bms_cell_voltage_reader.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
