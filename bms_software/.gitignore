@@ -10,6 +10,12 @@ local.properties
 .loadpath
 .recommenders
 
+#Debug
+Debug/
+debug/
+Release/
+release/
+
 # External tool builders
 .externalToolBuilders/
 
