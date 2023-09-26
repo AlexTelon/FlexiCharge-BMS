@@ -14,6 +14,7 @@
 5. 
     1. Push to new files and updated ones git Dev branch. 
 6. 
-    1. Wait for review by othyer team member.  Then they will approve the push. 
+    1. Wait for a squad member to review the pull request
+    2. If approved go to 7. Else resolve the issue and go back to 2.
 7. 
     1. Mark Task as done on git board.
