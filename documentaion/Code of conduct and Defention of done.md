@@ -35,7 +35,7 @@ The document will highlight the goal and the ways that will be used in communica
 - squad members should be at sprint planning at 16.15 on Fridays.
 - squad members should be at sprint retrospective at 15.15 on Fridays.
 - squad members should be at Backlog Grooming at 12.45 on Wednesday.
-- squad members should be at internal Demo at 14:30 on Wednesday.
+- squad members should be at internal Demo at 15:30 on Wednesday.
 - Work tasks to be tracked with git issues.
 - The members of the squad shall be entitled to exemption from the above points if he/she notifies the squad beforehand. 
 - Someone keeps notes for the meeting and publish the notes in discord.
