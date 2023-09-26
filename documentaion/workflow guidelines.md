@@ -12,7 +12,7 @@
 4. 
     1. Write documentaion in right document.(software documentation/Hardware diagram circut)
 5. 
-    1. Push to new files and updated ones git Dev branch. 
+    1. Push from your local branch and create a pull request to the dev branch. 
 6. 
     1. Wait for a squad member to review the pull request
     2. If approved go to 7. Else resolve the issue and go back to 2.
