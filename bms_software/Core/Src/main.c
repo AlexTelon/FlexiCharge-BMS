@@ -48,13 +48,16 @@ TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-// A global variable to hold the value of the raw adc reading.
-uint16_t adc_reading = 0;
-
 // A global variable to hold the voltage level of a cell.
 uint16_t cell_voltage = 0;
 
+// Global array with three ADC channels
 uint32_t adc_value[3];
+
+//Adc values for all channels
+uint16_t ch1_adc_value = 0;
+uint16_t ch2_adc_value = 0;
+uint16_t ch3_adc_value = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,10 +112,8 @@ int main(void)
   // Start timer for ADC Interrupt
   HAL_TIM_Base_Start(&htim3);
 
-  //Start ADC with DMA
+  // Start ADC with DMA
   HAL_ADC_Start_DMA(&hadc1, adc_value, 3);
-
-
 
   /* USER CODE END 2 */
 
@@ -120,11 +121,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-
-	  HAL_Delay(VOLTAGE_READING_UPDATE_DELAY);
-	  adc_reading = read_battery_raw(Cell_1, hadc1);
-	  cell_voltage = convert_rawADC_to_voltage(adc_reading);
+	  cell_voltage = convert_rawADC_to_voltage(adc_value[0]);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
