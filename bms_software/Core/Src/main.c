@@ -54,10 +54,10 @@ uint16_t cell_voltage = 0;
 // Global array with three ADC channels
 uint32_t adc_value[3];
 
-//Adc values for all channels
+//ADC values for all channels
 uint16_t ch1_adc_value = 0;
 uint16_t ch2_adc_value = 0;
-uint16_t ch3_adc_value = 0;
+uint16_t ch4_adc_value = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -121,7 +121,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  cell_voltage = convert_rawADC_to_voltage(adc_value[0]);
+	  ch1_adc_value = adc_value[0];
+	  ch2_adc_value = adc_value[1];
+	  ch4_adc_value = adc_value[2];
+
+	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
