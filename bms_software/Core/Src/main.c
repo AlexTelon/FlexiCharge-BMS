@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "bms_cell_voltage_reader.h"
+#include "bms_current_reader.h"
 
 /* USER CODE END Includes */
 
@@ -109,7 +110,7 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  // Start timer for ADC Interrupt
+  // Start timer for ADC Interrupt (10Hz)
   HAL_TIM_Base_Start(&htim3);
 
   // Start ADC with DMA
