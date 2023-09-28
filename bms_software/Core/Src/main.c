@@ -126,7 +126,8 @@ int main(void)
 	  ch2_adc_value = adc_value[1];
 	  ch4_adc_value = adc_value[2];
 
-	  convert_adc_to_mAmp(adc_resistor_drop(ch2_adc_value, ch4_adc_value));
+	  uint16_t voltage_drop = adc_resistor_drop(ch2_adc_value, ch4_adc_value);
+	  float mAmpt = convert_adc_to_mAmp(voltage_drop);
 
 	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
     /* USER CODE END WHILE */
