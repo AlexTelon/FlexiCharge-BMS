@@ -60,7 +60,7 @@ uint16_t ch1_adc_value = 0;
 uint16_t ch2_adc_value = 0;
 uint16_t ch4_adc_value = 0;
 
-float mAmp = 0;
+uint16_t mAmp = 0;
 uint16_t voltage_drop = 0;
 /* USER CODE END PV */
 
