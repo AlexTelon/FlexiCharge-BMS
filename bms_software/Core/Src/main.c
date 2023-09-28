@@ -60,6 +60,7 @@ uint16_t ch1_adc_value = 0;
 uint16_t ch2_adc_value = 0;
 uint16_t ch4_adc_value = 0;
 
+//Used for testing current reading implementation
 float mAmp = 0;
 uint16_t adc_drop = 0;
 /* USER CODE END PV */
