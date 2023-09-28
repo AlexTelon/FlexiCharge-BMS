@@ -13,6 +13,6 @@
 uint16_t adc_resistor_drop(uint16_t adc_pre, uint16_t adc_post);
 
 //Converts the ADC to m amp
-float convert_adc_to_mAmp(uint16_t adc_diff);
+uint16_t convert_adc_to_mAmp(uint16_t adc_diff);
 
 #endif /* INC_BMS_CURRENT_READER_H_ */
