@@ -59,6 +59,9 @@ uint32_t adc_value[3];
 uint16_t ch1_adc_value = 0;
 uint16_t ch2_adc_value = 0;
 uint16_t ch4_adc_value = 0;
+
+float mAmp = 0;
+uint16_t voltage_drop = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -115,7 +118,6 @@ int main(void)
 
   // Start ADC with DMA
   HAL_ADC_Start_DMA(&hadc1, adc_value, 3);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -126,8 +128,8 @@ int main(void)
 	  ch2_adc_value = adc_value[1];
 	  ch4_adc_value = adc_value[2];
 
-	  uint16_t voltage_drop = adc_resistor_drop(ch2_adc_value, ch4_adc_value);
-	  float mAmpt = convert_adc_to_mAmp(voltage_drop);
+	  voltage_drop = adc_resistor_drop(ch2_adc_value, ch4_adc_value);
+	  mAmp = convert_adc_to_mAmp(voltage_drop);
 
 	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
     /* USER CODE END WHILE */
