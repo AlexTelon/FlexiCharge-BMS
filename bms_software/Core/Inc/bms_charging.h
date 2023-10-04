@@ -10,6 +10,7 @@
 
 #include "bms_cell_voltage_reader.h"
 #include "bms_current_reader.h"
+#include "bms_constats.h"
 
 enum charging_state{
 	pre_charge,
@@ -19,9 +20,9 @@ enum charging_state{
 };
 
 struct battery_cell {
-	uint16_t voltage;
-	uint16_t current;
-	enum charging_state state;
+	uint16_t voltage; //Cells voltage
+	uint16_t current; //Charging current in mA flowing to the cell
+	enum charging_state state; //The cells charging state
 };
 
 void open_realys();

@@ -32,3 +32,23 @@ void get_cells_voltage(struct battery_cell *cell, uint16_t *adc_voltage_arr){
 	//turn on relay
 }
 
+void get_cells_state(struct battery_cell *cell){
+
+	for(int8_t i = 0; i < sizeof(cell); i++){
+
+		if(cell[i].current >= FULL_CHARGE_CURRENT)
+			cell[i].state = no_charge;
+
+		else if(cell[i].voltage < PRE_CHARGE_LEVEL)
+			cell[i].state = pre_charge;
+
+		else if(cell[i].voltage >= PRE_CHARGE_LEVEL && cell[i].voltage < CONSTANT_VOLTAGE)
+			cell[i].state = constant_current;
+
+		else if (cell[i].voltage >= CONSTANT_VOLTAGE)
+			cell[i].state = constant_voltage;
+
+		else cell[i].state = no_charge; //Something wrong
+	}
+}
+
