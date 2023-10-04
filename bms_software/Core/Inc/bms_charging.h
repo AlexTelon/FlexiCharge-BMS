@@ -8,10 +8,12 @@
 #ifndef INC_BMS_CHARGING_H_
 #define INC_BMS_CHARGING_H_
 
+#include "bms_cell_voltage_reader.h"
+#include "bms_current_reader.h"
+
 enum charging_state{
 	pre_charge,
-	constant_current_one_cell,
-	constat_current_all_cells,
+	constant_current,
 	constant_volatage,
 	no_charge
 };
@@ -19,24 +21,26 @@ enum charging_state{
 struct battery_cell {
 	uint16_t voltage;
 	uint16_t current;
-	charging_state state;
+	enum charging_state state;
 };
 
 void open_realys();
 
-void get_cells_charge(battery_cell *cell);
+void get_cells_current(struct battery_cell *cell, uint16_t *adc_current_arr);
 
-void get_cells_state(battery_cell *cell);
+void get_cells_voltage(struct battery_cell *cell, uint16_t *adc_voltage_arr);
 
-void choose_charging_cells(battery_cell *cell);
+void get_cells_state(struct battery_cell *cell);
 
-void switch_charging_state(charging_state state);
+void choose_charging_cells(struct battery_cell *cell);
 
-void pre_charge(battery_cell *cell);
+void switch_charging_state(enum charging_state state);
 
-void constant_current(battery_cell *cell);
+void battery_pre_charge(struct battery_cell *cell);
 
-void constant_voltage(battery_cell *cell);
+void battery_constant_current(struct battery_cell *cell);
+
+void battery_constant_voltage(struct battery_cell *cell);
 
 
 

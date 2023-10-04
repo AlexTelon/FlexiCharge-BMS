@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "bms_cell_voltage_reader.h"
 #include "bms_current_reader.h"
+#include "bms_charging.h"
 
 /* USER CODE END Includes */
 
