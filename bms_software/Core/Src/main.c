@@ -63,6 +63,9 @@ uint16_t ch2_adc_value = 0;
 uint16_t ch4_adc_value = 0;
 
 uint8_t connection_ok = 0;
+uint8_t heartbeat = 0;
+uint8_t power_init = 0;
+uint8_t power_end = 0;
 
 //Used for testing current reading implementation
 float mAmp = 0;
@@ -131,6 +134,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  uint16_t cell_voltage_copy = cell_voltage;
+
 	  ch1_adc_value = adc_value[0];
 	  ch2_adc_value = adc_value[1];
 	  ch4_adc_value = adc_value[2];
@@ -142,6 +147,26 @@ int main(void)
 
 	  if(connection_ok == 0)
 		  connection_ok = uart_establish_connection(huart1);
+
+	  if(connection_ok == 1)
+		  if(power_end == 0)
+			  if(power_init == 0)
+				  power_init = uart_init_power(huart1);
+
+	  // Here charging is being done. send updates about data as it changes.
+	  // Send mock data for now.
+	  if(cell_voltage_copy != cell_voltage)
+		  uart_data_temp(huart1, "test");
+
+
+	  if(connection_ok == 1)
+		  if(power_init == 1)
+			  if(power_end == 0)
+				  power_end = uart_terminate_power(huart1);
+
+	  if(connection_ok == 1)
+		  heartbeat = uart_heartbeat(huart1);
+
 
     /* USER CODE END WHILE */
 
