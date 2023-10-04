@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "bms_cell_voltage_reader.h"
 #include "bms_current_reader.h"
+#include "bms_uart_communication.h"
 
 /* USER CODE END Includes */
 
@@ -90,7 +91,15 @@ static void MX_USART1_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	// All the commands that will be sent to and from the BMS.
+	const char* ok = "ok";
+	const char* voltage = "voltage";
+	const char* begin = "begin";
+	const char* end = "end";
+	const char* charge = "charge";
+	const char* temp = "temp";
+	const char* connect = "connect";
+	const char* beep = "beep";
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -136,6 +145,8 @@ int main(void)
 	  mAmp = convert_adc_to_mAmp(adc_drop);
 
 	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
+
+	  uart_send_string(ok, huart2);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
