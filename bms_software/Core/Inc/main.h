@@ -65,12 +65,22 @@ void Error_Handler(void);
 #define USART_RX_GPIO_Port GPIOA
 #define LD2_Pin GPIO_PIN_5
 #define LD2_GPIO_Port GPIOA
+#define cell1_relay_Pin GPIO_PIN_1
+#define cell1_relay_GPIO_Port GPIOB
+#define cc_relay_Pin GPIO_PIN_10
+#define cc_relay_GPIO_Port GPIOB
+#define cell2_relay_Pin GPIO_PIN_15
+#define cell2_relay_GPIO_Port GPIOB
+#define pc_relay_Pin GPIO_PIN_8
+#define pc_relay_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14
 #define TCK_GPIO_Port GPIOA
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
+#define cv_relay_Pin GPIO_PIN_4
+#define cv_relay_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

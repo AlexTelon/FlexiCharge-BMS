@@ -15,7 +15,7 @@
 enum charging_state{
 	pre_charge,
 	constant_current,
-	constant_volatage,
+	constant_voltage,
 	no_charge
 };
 
