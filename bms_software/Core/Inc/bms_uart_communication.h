@@ -28,4 +28,7 @@ uint8_t uart_data_temp(UART_HandleTypeDef uart, uint8_t data);
 
 uint8_t uart_data_charge(UART_HandleTypeDef uart, uint8_t data);
 
+uint8_t uart_heartbeat(UART_HandleTypeDef uart);
+
+
 #endif /* INC_BMS_UART_COMMUNICATION_H_ */
