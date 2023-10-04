@@ -5,6 +5,16 @@
 
 #include "bms_uart_communication.h"
 
+	// All the commands that will be sent to and from the BMS.
+const uint8_t* ok = "ok";
+const uint8_t* voltage = "voltage:";
+const uint8_t* begin = "begin";
+const uint8_t* end = "end";
+const uint8_t* charge = "charge";
+const uint8_t* temp = "temp";
+const uint8_t* connect = "connect";
+const uint8_t* beep = "beep";
+
 // Function to send a string over UART.
 void uart_send_string(const uint8_t* command, UART_HandleTypeDef uart, uint8_t length)
 {
@@ -34,7 +44,7 @@ uint8_t uart_receive_ok(UART_HandleTypeDef uart)
 // Function to establish connection. Sends the "connect" command and returns the response.
 uint8_t uart_establish_connection(UART_HandleTypeDef uart)
 {
-	uart_send_string("connect", uart, 7);
+	uart_send_string(connect, uart, 7);
 
 	return uart_receive_ok(uart);
 }
@@ -43,35 +53,35 @@ uint8_t uart_handshake(uint8_t voltage, UART_HandleTypeDef uart)
 {
 	uint8_t result = 0;
 	result = uart_establish_connection(uart);
-	uart_send_string("voltage:", uart, 8);
+	uart_send_string(voltage, uart, 8);
 	uart_send_number(voltage, uart);
 	return result;
 }
 
 uint8_t uart_init_power(UART_HandleTypeDef uart)
 {
-	uart_send_string("begin", uart, 5);
+	uart_send_string(begin, uart, 5);
 
 	return uart_receive_ok(uart);
 }
 
 uint8_t uart_terminate_power(UART_HandleTypeDef uart)
 {
-	uart_send_string("end", uart, 3);
+	uart_send_string(end, uart, 3);
 
 	return uart_receive_ok(uart);
 }
 
 uint8_t uart_data_temp(UART_HandleTypeDef uart, uint8_t data)
 {
-	uart_send_string("temp", uart, 4);
+	uart_send_string(temp, uart, 4);
 
 	return uart_receive_ok(uart);
 }
 
 uint8_t uart_data_charge(UART_HandleTypeDef uart, uint8_t data)
 {
-	uart_send_string("charge", uart, 6);
+	uart_send_string(charge, uart, 6);
 
 	return uart_receive_ok(uart);
 }

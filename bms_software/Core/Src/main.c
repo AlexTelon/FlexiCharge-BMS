@@ -62,7 +62,7 @@ uint16_t ch1_adc_value = 0;
 uint16_t ch2_adc_value = 0;
 uint16_t ch4_adc_value = 0;
 
-uint8_t response = 0;
+uint8_t connection_ok = 0;
 
 //Used for testing current reading implementation
 float mAmp = 0;
@@ -93,15 +93,7 @@ static void MX_USART1_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	// All the commands that will be sent to and from the BMS.
-	const uint8_t* ok = "ok";
-	const uint8_t* voltage = "voltage";
-	const uint8_t* begin = "begin";
-	const uint8_t* end = "end";
-	const uint8_t* charge = "charge";
-	const uint8_t* temp = "temp";
-	const uint8_t* connect = "connect";
-	const uint8_t* beep = "beep";
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -148,8 +140,8 @@ int main(void)
 
 	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
 
-	  if(response == 0)
-		  response = uart_establish_connection(huart1);
+	  if(connection_ok == 0)
+		  connection_ok = uart_establish_connection(huart1);
 
     /* USER CODE END WHILE */
 
