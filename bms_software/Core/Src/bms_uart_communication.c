@@ -85,3 +85,10 @@ uint8_t uart_data_charge(UART_HandleTypeDef uart, uint8_t data)
 
 	return uart_receive_ok(uart);
 }
+
+uint8_t uart_heartbeat(UART_HandleTypeDef uart)
+{
+	uart_send_string(beep, uart, 4);
+
+	return uart_receive_ok(uart);
+}
