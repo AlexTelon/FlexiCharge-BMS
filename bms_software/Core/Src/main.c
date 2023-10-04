@@ -92,14 +92,14 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	// All the commands that will be sent to and from the BMS.
-	const char* ok = "ok";
-	const char* voltage = "voltage";
-	const char* begin = "begin";
-	const char* end = "end";
-	const char* charge = "charge";
-	const char* temp = "temp";
-	const char* connect = "connect";
-	const char* beep = "beep";
+	const uint8_t* ok = "ok";
+	const uint8_t* voltage = "voltage";
+	const uint8_t* begin = "begin";
+	const uint8_t* end = "end";
+	const uint8_t* charge = "charge";
+	const uint8_t* temp = "temp";
+	const uint8_t* connect = "connect";
+	const uint8_t* beep = "beep";
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -129,6 +129,8 @@ int main(void)
   // Start timer for ADC Interrupt (10Hz)
   HAL_TIM_Base_Start(&htim3);
 
+  uart_send_string(ok, huart2, 2);
+
   // Start ADC with DMA
   HAL_ADC_Start_DMA(&hadc1, adc_value, 3);
   /* USER CODE END 2 */
@@ -146,7 +148,6 @@ int main(void)
 
 	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
 
-	  uart_send_string(ok, huart2);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
