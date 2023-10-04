@@ -43,6 +43,8 @@ void battery_constant_current(struct battery_cell *cell);
 
 void battery_constant_voltage(struct battery_cell *cell);
 
+void monitor_cell_charging();
+
 
 
 #endif /* INC_BMS_CHARGING_H_ */

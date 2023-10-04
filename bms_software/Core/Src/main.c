@@ -367,10 +367,13 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LD2_Pin|pc_relay_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin|cc_relay_Pin|cell2_relay_Pin|cv_relay_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin|cc_relay_Pin|cell2_relay_Pin|cv_relay_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(pc_relay_GPIO_Port, pc_relay_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
