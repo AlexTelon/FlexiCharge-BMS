@@ -16,27 +16,27 @@ enum charging_state{
 	no_charge
 };
 
-uint8_t charging_cell = 0;
-
 struct battery_cell {
 	uint16_t voltage;
 	uint16_t current;
 	charging_state state;
 };
 
-void get_cells_charge(battery_cell cell_1, battery_cell cell_2);
+void open_realys();
 
-void get_cells_state(battery_cell cell_1, battery_cell cell_2);
+void get_cells_charge(battery_cell *cell);
 
-void choose_charging_cells(battery_cell cell_1, battery_cell cell_2);
+void get_cells_state(battery_cell *cell);
 
-void switch_charging_state();
+void choose_charging_cells(battery_cell *cell);
 
-void charge_individual_cell(uint8_t cell_nbr);
+void switch_charging_state(charging_state state);
 
-void charge_both_cells();
+void pre_charge(battery_cell *cell);
 
-void charge();
+void constant_current(battery_cell *cell);
+
+void constant_voltage(battery_cell *cell);
 
 
 
