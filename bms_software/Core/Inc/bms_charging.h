@@ -11,6 +11,7 @@
 #include "bms_cell_voltage_reader.h"
 #include "bms_current_reader.h"
 #include "bms_constats.h"
+#include "main.h" // not sure if it should be used this way
 
 enum charging_state{
 	pre_charge,

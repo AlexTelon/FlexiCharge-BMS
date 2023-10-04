@@ -8,28 +8,34 @@
 #include "bms_charging.h"
 
 void open_realys(){
-
+	//turns off/opens all relays
+	HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_SET);//Active low
+	HAL_GPIO_WritePin(GPIOB, cell2_relay_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, cc_relay_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_SET);
 }
 
 void get_cells_current(struct battery_cell *cell, uint16_t *adc_current_arr){
-	//turn off relay
 
 	for(int8_t i = 0; i < sizeof(cell); i++){
 		cell[i].current = adc_current_arr[i];
 	}
-
-	//turn on relay
 }
 
 void get_cells_voltage(struct battery_cell *cell, uint16_t *adc_voltage_arr){
 
 	//turn off relay
+	HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_SET);//Active low
+	HAL_GPIO_WritePin(GPIOB, cell2_relay_Pin, GPIO_PIN_SET);
 
 	for(int8_t i = 0; i < sizeof(cell); i++){
 		cell[i].voltage = adc_voltage_arr[i];
 	}
 
 	//turn on relay
+	HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOB, cell2_relay_Pin, GPIO_PIN_RESET);
 }
 
 void get_cells_state(struct battery_cell *cell){
