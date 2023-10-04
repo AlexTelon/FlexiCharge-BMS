@@ -62,6 +62,8 @@ uint16_t ch1_adc_value = 0;
 uint16_t ch2_adc_value = 0;
 uint16_t ch4_adc_value = 0;
 
+uint8_t response = 0;
+
 //Used for testing current reading implementation
 float mAmp = 0;
 uint16_t adc_drop = 0;
@@ -129,8 +131,6 @@ int main(void)
   // Start timer for ADC Interrupt (10Hz)
   HAL_TIM_Base_Start(&htim3);
 
-  uart_send_string(ok, huart2, 2);
-
   // Start ADC with DMA
   HAL_ADC_Start_DMA(&hadc1, adc_value, 3);
   /* USER CODE END 2 */
@@ -147,6 +147,9 @@ int main(void)
 	  mAmp = convert_adc_to_mAmp(adc_drop);
 
 	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
+
+	  if(response == 0)
+		  response = uart_establish_connection(huart1);
 
     /* USER CODE END WHILE */
 
@@ -333,7 +336,7 @@ static void MX_USART1_UART_Init(void)
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
   huart1.Init.BaudRate = 115200;
-  huart1.Init.WordLength = UART_WORDLENGTH_9B;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
   huart1.Init.Mode = UART_MODE_TX_RX;
