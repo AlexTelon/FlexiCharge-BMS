@@ -26,7 +26,11 @@ void uart_send_string(const uint8_t* command, UART_HandleTypeDef uart, uint8_t l
 
 void uart_send_number(uint8_t n, UART_HandleTypeDef uart)
 {
-	HAL_UART_Transmit(&uart, n, 1, 200);
+	  const buffSize = 4;
+	  char out[buffSize];
+	  int lengthMinusNullTerminator = snprintf(out, buffSize, "%hu", n);
+
+	  uart_send_string(out, uart, lengthMinusNullTerminator);
 }
 
 // This function checks for a response fromt the charger, and returns a 1 if the expected "ok" command was received.
@@ -44,7 +48,7 @@ uint8_t uart_receive_ok(UART_HandleTypeDef uart)
 // Function to establish connection. Sends the "connect" command and returns the response.
 uint8_t uart_establish_connection(UART_HandleTypeDef uart)
 {
-	uart_send_string(connect, uart, 7);
+	uart_send_string(connect, uart, sizeof(connect));
 
 	return uart_receive_ok(uart);
 }
@@ -60,35 +64,35 @@ uint8_t uart_handshake(uint8_t voltage, UART_HandleTypeDef uart)
 
 uint8_t uart_init_power(UART_HandleTypeDef uart)
 {
-	uart_send_string(begin, uart, 5);
+	uart_send_string(begin, uart, sizeof(begin));
 
 	return uart_receive_ok(uart);
 }
 
 uint8_t uart_terminate_power(UART_HandleTypeDef uart)
 {
-	uart_send_string(end, uart, 3);
+	uart_send_string(end, uart, sizeof(end));
 
 	return uart_receive_ok(uart);
 }
 
 uint8_t uart_data_temp(UART_HandleTypeDef uart, uint8_t data)
 {
-	uart_send_string(temp, uart, 4);
+	uart_send_string(temp, uart, sizeof(temp));
 
 	return uart_receive_ok(uart);
 }
 
 uint8_t uart_data_charge(UART_HandleTypeDef uart, uint8_t data)
 {
-	uart_send_string(charge, uart, 6);
+	uart_send_string(charge, uart, sizeof(charge));
 
 	return uart_receive_ok(uart);
 }
 
 uint8_t uart_heartbeat(UART_HandleTypeDef uart)
 {
-	uart_send_string(beep, uart, 4);
+	uart_send_string(beep, uart, sizeof(beep));
 
 	return uart_receive_ok(uart);
 }

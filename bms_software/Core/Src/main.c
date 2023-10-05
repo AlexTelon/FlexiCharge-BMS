@@ -25,6 +25,7 @@
 #include "bms_current_reader.h"
 #include "bms_uart_communication.h"
 
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -157,6 +158,8 @@ int main(void)
 	  // Send mock data for now.
 	  if(cell_voltage_copy != cell_voltage)
 		  uart_data_temp(huart1, "test");
+
+	  uart_send_number(50, huart1);
 
 
 	  if(connection_ok == 1)
