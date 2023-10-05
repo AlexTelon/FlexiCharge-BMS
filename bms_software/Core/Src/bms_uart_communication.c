@@ -6,14 +6,14 @@
 #include "bms_uart_communication.h"
 
 	// All the commands that will be sent to and from the BMS.
-const uint8_t* ok = "ok";
-const uint8_t* voltage = "voltage:";
-const uint8_t* begin = "begin";
-const uint8_t* end = "end";
-const uint8_t* charge = "charge";
-const uint8_t* temp = "temp";
-const uint8_t* connect = "connect";
-const uint8_t* beep = "beep";
+const uint8_t* ok = "ok\n";
+const uint8_t* voltage = "voltage:\n";
+const uint8_t* begin = "begin\n";
+const uint8_t* end = "end\n";
+const uint8_t* charge = "charge\n";
+const uint8_t* temp = "temp\n";
+const uint8_t* connect = "connect\n";
+const uint8_t* beep = "beep\n";
 
 // Function to send a string over UART.
 void uart_send_string(const uint8_t* command, UART_HandleTypeDef uart, uint8_t length)
