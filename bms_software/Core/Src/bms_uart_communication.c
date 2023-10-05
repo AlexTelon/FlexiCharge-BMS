@@ -11,7 +11,7 @@ const uint8_t* voltage = "\nvoltage:";
 const uint8_t* begin = "\nbegin";
 const uint8_t* end = "\nend";
 const uint8_t* charge = "\ncharge:";
-const uint8_t* temp = "\ntemp";
+const uint8_t* temp = "\ntemp:";
 const uint8_t* connect = "\nconnect";
 const uint8_t* beep = "\nbeep";
 
@@ -81,7 +81,7 @@ uint8_t uart_terminate_power(UART_HandleTypeDef uart)
 
 uint8_t uart_data_temp(UART_HandleTypeDef uart, uint8_t data)
 {
-	uart_send_string(temp, uart, sizeof(temp)+2);
+	uart_send_string(temp, uart, sizeof(temp)+3);
 	uart_send_number(data, uart);
 
 	return uart_receive_ok(uart);
