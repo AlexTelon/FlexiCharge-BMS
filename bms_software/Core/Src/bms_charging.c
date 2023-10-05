@@ -23,7 +23,8 @@ void open_realys(){
 void get_cells_charging_current(struct battery_cell *cell, uint16_t adc_current){
 
 	for(int8_t i = 0; i < sizeof(cell); i++){
-		cell[i].charging_current = adc_current;
+		if(cell[i].is_charging) //should only read charging current if the cell i charging
+			cell[i].charging_current = adc_current;
 	}
 }
 
@@ -46,13 +47,13 @@ void get_cells_state(struct battery_cell *cell){
 
 	for(int8_t i = 0; i < sizeof(cell); i++){
 
-		if(cell[i].charging_current <= FULL_CHARGE_CURRENT) //This will result in faulty behavior for now
+		if(cell[i].charging_current >= FULL_CHARGE_CURRENT) //This will result in faulty behavior for now
 			cell[i].state = no_charge;
 
-		else if(cell[i].voltage < PRE_CHARGE_LEVEL)
+		else if(cell[i].voltage < PRE_CHARGE_VOLTAGE)
 			cell[i].state = pre_charge;
 
-		else if(cell[i].voltage >= PRE_CHARGE_LEVEL && cell[i].voltage < CONSTANT_VOLTAGE)
+		else if(cell[i].voltage >= PRE_CHARGE_VOLTAGE && cell[i].voltage < CONSTANT_VOLTAGE)
 			cell[i].state = constant_current;
 
 		else if (cell[i].voltage >= CONSTANT_VOLTAGE)

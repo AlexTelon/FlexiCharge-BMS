@@ -18,17 +18,22 @@ enum charging_state{
 	pre_charge,
 	constant_current,
 	constant_voltage,
-	no_charge
+	no_charge,
+	unknown
 };
 
 struct battery_cell {
 	uint16_t voltage; //Cells voltage
 	uint16_t charging_current; //Charging current in mA flowing to the cell
-	bool charging;
+	bool is_charging;
 	enum charging_state state; //The cells charging state
 };
 
 void open_realys();
+
+struct battery_cell *battery_cell_init(struct battery_cell *cell);
+
+void get_cell_info(struct battery_cell *cell, uint16_t *adc);
 
 void get_cells_charging_current(struct battery_cell *cell, uint16_t adc_current);
 
