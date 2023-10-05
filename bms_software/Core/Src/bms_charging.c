@@ -7,6 +7,8 @@
 
 #include "bms_charging.h"
 
+uint8_t nbr_charging_cells = 0;
+
 void open_realys(){
 	//turns off/opens all relays
 	HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_SET);//Active low
@@ -16,10 +18,12 @@ void open_realys(){
 	HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_SET);
 }
 
-void get_cells_current(struct battery_cell *cell, uint16_t *adc_current_arr){
+//check charging current to individual cell, needs to know which cell is currently
+//being charged
+void get_cells_charging_current(struct battery_cell *cell, uint16_t adc_current){
 
 	for(int8_t i = 0; i < sizeof(cell); i++){
-		cell[i].current = adc_current_arr[i];
+		cell[i].charging_current = adc_current;
 	}
 }
 
@@ -42,7 +46,7 @@ void get_cells_state(struct battery_cell *cell){
 
 	for(int8_t i = 0; i < sizeof(cell); i++){
 
-		if(cell[i].current >= FULL_CHARGE_CURRENT)
+		if(cell[i].charging_current <= FULL_CHARGE_CURRENT) //This will result in faulty behavior for now
 			cell[i].state = no_charge;
 
 		else if(cell[i].voltage < PRE_CHARGE_LEVEL)
@@ -55,6 +59,25 @@ void get_cells_state(struct battery_cell *cell){
 			cell[i].state = constant_voltage;
 
 		else cell[i].state = no_charge; //Something wrong
+	}
+}
+
+void choose_charging_cells(struct battery_cell *cell){
+	uint8_t charging_cell = 99;
+	for(uint8_t i = 0; i < sizeof(cell) - 1; i++){
+		if(cell[i].state < cell[i + 1].state){
+			charging_cell = i;
+		}
+		else if (cell[i].state > cell[i + 1].state){
+			charging_cell = i+1;
+		}
+		else if (cell[i].voltage < cell[i+1].voltage){ //the cells are in the same state
+			charging_cell = i;
+		}
+		else if (cell[i].voltage > cell[i+1].voltage){
+			charging_cell = i+1;
+		}
+		else charging_cell = 99;
 	}
 }
 
