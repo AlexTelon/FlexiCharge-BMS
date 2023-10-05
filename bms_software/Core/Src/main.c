@@ -159,8 +159,12 @@ int main(void)
 			  {
 				  // Here charging is being done. send updates about data as it changes.
 				  // Send mock data for now.
-				  if(cell_voltage_copy != cell_voltage)
+				  if(cell_voltage_copy < cell_voltage + 200 || cell_voltage_copy > cell_voltage + 200)
 					  uart_data_temp(huart1, 55);
+				  if(cell_voltage_copy < cell_voltage + 500 || cell_voltage_copy > cell_voltage + 500)
+					  uart_data_charge(huart1, 70);
+				  if(cell_voltage_copy < cell_voltage + 1500 || cell_voltage_copy > cell_voltage + 1500)
+					  uart_terminate_power(huart1);
 			  }
 		  }
 	  }
