@@ -7,6 +7,7 @@
 #define INC_BMS_UART_COMMUNICATION_H_
 
 #include "stm32f4xx_hal.h"
+#include "stdio.h"
 
 
 // Function prototypes
