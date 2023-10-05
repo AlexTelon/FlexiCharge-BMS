@@ -57,8 +57,8 @@ uint8_t uart_handshake(uint8_t voltage, UART_HandleTypeDef uart)
 {
 	uint8_t result = 0;
 	result = uart_establish_connection(uart);
-	uart_send_string(voltage, uart, 8);
-	uart_send_number(voltage, uart);
+	if(result == 1)
+		uart_send_number(voltage, uart);
 	return result;
 }
 
@@ -79,6 +79,7 @@ uint8_t uart_terminate_power(UART_HandleTypeDef uart)
 uint8_t uart_data_temp(UART_HandleTypeDef uart, uint8_t data)
 {
 	uart_send_string(temp, uart, sizeof(temp));
+	uart_send_number(data, uart);
 
 	return uart_receive_ok(uart);
 }
@@ -86,6 +87,7 @@ uint8_t uart_data_temp(UART_HandleTypeDef uart, uint8_t data)
 uint8_t uart_data_charge(UART_HandleTypeDef uart, uint8_t data)
 {
 	uart_send_string(charge, uart, sizeof(charge));
+	uart_send_number(data, uart);
 
 	return uart_receive_ok(uart);
 }
