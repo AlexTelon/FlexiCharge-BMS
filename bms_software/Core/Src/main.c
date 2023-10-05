@@ -146,27 +146,27 @@ int main(void)
 
 	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
 
+	  // Request connection untill connection is established.
 	  if(connection_ok == 0)
-		  connection_ok = uart_establish_connection(huart1);
-
-	  if(connection_ok == 1)
+		  connection_ok = uart_handshake(5, huart1);//uart_establish_connection(huart1);
+	  else
+	  {
 		  if(power_end == 0)
+		  {
 			  if(power_init == 0)
 				  power_init = uart_init_power(huart1);
+			  else
+			  {
+				  // Here charging is being done. send updates about data as it changes.
+				  // Send mock data for now.
+				  if(cell_voltage_copy != cell_voltage)
+					  uart_data_temp(huart1, 55);
+			  }
+		  }
+	  }
 
-	  // Here charging is being done. send updates about data as it changes.
-	  // Send mock data for now.
-	  if(cell_voltage_copy != cell_voltage)
-		  uart_data_temp(huart1, "test");
 
-	  uart_send_number(50, huart1);
-
-
-	  if(connection_ok == 1)
-		  if(power_init == 1)
-			  if(power_end == 0)
-				  power_end = uart_terminate_power(huart1);
-
+	  // The heartbeat should be sent each iteration.
 	  if(connection_ok == 1)
 		  heartbeat = uart_heartbeat(huart1);
 
