@@ -35,7 +35,7 @@ struct battery_cell *battery_cell_init(struct battery_cell *cell);
 
 void get_cell_info(struct battery_cell *cell, uint16_t *adc);
 
-void get_cells_charging_current(struct battery_cell *cell, uint16_t adc_current);
+void get_cells_charging_current(struct battery_cell *cell, uint16_t read_current);
 
 void get_cells_voltage(struct battery_cell *cell, uint16_t *adc_voltage_arr);
 

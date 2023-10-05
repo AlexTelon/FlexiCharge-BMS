@@ -20,11 +20,13 @@ void open_realys(){
 
 //check charging current to individual cell, needs to know which cell is currently
 //being charged
-void get_cells_charging_current(struct battery_cell *cell, uint16_t adc_current){
-	adc_current /= nbr_charging_cells;
+void get_cells_charging_current(struct battery_cell *cell, uint16_t read_current){
+
+	read_current /= nbr_charging_cells;
+
 	for(int8_t i = 0; i < sizeof(cell); i++){
 		if(cell[i].is_charging) //should only read charging current if the cell i charging
-			cell[i].charging_current = adc_current;
+			cell[i].charging_current = read_current;
 		else cell[i].charging_current = 0;
 	}
 }
