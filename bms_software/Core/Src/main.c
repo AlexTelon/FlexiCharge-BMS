@@ -135,7 +135,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  uint16_t cell_voltage_copy = cell_voltage;
 
 	  ch1_adc_value = adc_value[0];
 	  ch2_adc_value = adc_value[1];
@@ -163,11 +162,9 @@ int main(void)
 			  {
 				  // Here charging is being done. send updates about data as it changes.
 				  // Send mock data for now.
-				  if(cell_voltage_copy < cell_voltage + 200 || cell_voltage_copy > cell_voltage - 200)
-					  uart_data_temp(huart1, 55);
-				  if(cell_voltage_copy < cell_voltage + 500 || cell_voltage_copy > cell_voltage - 500)
-					  uart_data_charge(huart1, 70);
-				  if(cell_voltage_copy < cell_voltage + 1500 || cell_voltage_copy > cell_voltage - 1500)
+				  if(cell_voltage < 3500)
+					  uart_data_charge(huart1, cell_voltage/30);
+				  if(cell_voltage > 3500)
 				  {
 					  power_end = uart_terminate_power(huart1);
 					  if(power_end == 1)
