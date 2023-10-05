@@ -7,16 +7,16 @@
 
 	// All the commands that will be sent to and from the BMS.
 const char* ok = "ok";
-const char* voltage = "\nvoltage:";
-const char* begin = "\nbegin";
-const char* end = "\nend";
-const char* charge = "\ncharge:";
-const char* temp = "\ntemp:";
-const char* connect = "\nconnect";
-const char* beep = "\nbeep";
+const char* voltage = "voltage:\n";
+const char* begin = "begin\n";
+const char* end = "end\n";
+const char* charge = "charge:\n";
+const char* temp = "temp:\n";
+const char* connect = "connect\n";
+const char* beep = "beep\n";
 
 // Function to send a string over UART.
-void uart_send_string(const uint8_t* command, UART_HandleTypeDef uart, uint8_t length)
+void uart_send_string(const char* command, UART_HandleTypeDef uart, uint8_t length)
 {
 	for(int i = 0; i <= length; i++)
 	{
