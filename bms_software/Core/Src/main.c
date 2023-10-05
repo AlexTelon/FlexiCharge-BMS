@@ -148,7 +148,11 @@ int main(void)
 
 	  // Request connection untill connection is established.
 	  if(connection_ok == 0)
-		  connection_ok = uart_handshake(5, huart1);//uart_establish_connection(huart1);
+	  {
+		  connection_ok = uart_handshake(5, huart1);
+		  power_end = 0;
+		  power_init = 0;
+	  }
 	  else
 	  {
 		  if(power_end == 0)
@@ -159,12 +163,16 @@ int main(void)
 			  {
 				  // Here charging is being done. send updates about data as it changes.
 				  // Send mock data for now.
-				  if(cell_voltage_copy < cell_voltage + 200 || cell_voltage_copy > cell_voltage + 200)
+				  if(cell_voltage_copy < cell_voltage + 200 || cell_voltage_copy > cell_voltage - 200)
 					  uart_data_temp(huart1, 55);
-				  if(cell_voltage_copy < cell_voltage + 500 || cell_voltage_copy > cell_voltage + 500)
+				  if(cell_voltage_copy < cell_voltage + 500 || cell_voltage_copy > cell_voltage - 500)
 					  uart_data_charge(huart1, 70);
-				  if(cell_voltage_copy < cell_voltage + 1500 || cell_voltage_copy > cell_voltage + 1500)
-					  uart_terminate_power(huart1);
+				  if(cell_voltage_copy < cell_voltage + 1500 || cell_voltage_copy > cell_voltage - 1500)
+				  {
+					  power_end = uart_terminate_power(huart1);
+					  if(power_end == 1)
+						  connection_ok = 0;
+				  }
 			  }
 		  }
 	  }
