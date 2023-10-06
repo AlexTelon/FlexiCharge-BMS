@@ -21,6 +21,8 @@
 #define CHARGING_RESISTANCE 5.4
 #define MILLI 1000
 
-// A constant to determine how long the UART will wait for a response before sending a new command.
+// A constant to determine how long the UART will wait for a response before sending a new command
 #define RESPONSE_DELAY 1000
+// A constant to limit the ammount of repeated command
+#define RESPONSE_TIMOUT 3
 #endif /* INC_BMS_CONSTATS_H_ */
