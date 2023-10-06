@@ -227,37 +227,6 @@ int main(void)
 	  }
 	  }
 
-
-	  // Request connection untill connection is established.
-//	  if(connection_ok == 0)
-//	  {
-//		  connection_ok = uart_handshake(5, huart1);
-//		  power_end = 0;
-//		  power_init = 0;
-//	  }
-//	  else
-//	  {
-//		  if(power_end == 0)
-//		  {
-//			  if(power_init == 0)
-//				  power_init = uart_init_power(huart1);
-//			  else
-//			  {
-//				  // Here charging is being done. send updates about data as it changes.
-//				  // Send mock data for now.
-//				  if(cell_voltage < 3500)
-//					  uart_data_charge(huart1, cell_voltage/30);
-//				  if(cell_voltage > 3500)
-//				  {
-//					  power_end = uart_terminate_power(huart1);
-//					  if(power_end == 1)
-//						  connection_ok = 0;
-//				  }
-//			  }
-//		  }
-//	  }
-
-
 	  // The heartbeat should be sent each iteration.
 	  if(connection_ok == 1)
 		  heartbeat = uart_heartbeat(huart1);
