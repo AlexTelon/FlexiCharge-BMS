@@ -63,11 +63,17 @@ uint16_t ch1_adc_value = 0;
 uint16_t ch2_adc_value = 0;
 uint16_t ch4_adc_value = 0;
 
+// Flags for the communication control logic
 uint8_t connection_ok = 0;
 uint8_t heartbeat = 0;
 uint8_t power_init = 0;
 uint8_t power_end = 0;
 
+// Timeout counters. To limit the amount of commands sent
+uint8_t power_init_timeout = 0;
+uint8_t power_end_timeout = 0;
+
+// The estimated State of Charge
 uint8_t state_of_charge;
 
 enum CONNECTION_STATE connection_state = HANDSHAKE;
@@ -149,10 +155,10 @@ int main(void)
 
 	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
 
-	  // Rewrite to use a case statement.
+	  // A switch to control the communication logic
 	  switch(connection_state)
 	  {
-	  case HANDSHAKE:
+	  case HANDSHAKE: // Await connection with charger and negotiate voltage levels
 	  {
 		  if(connection_ok == 0)
 		  {
@@ -164,19 +170,24 @@ int main(void)
 		  else
 			  connection_state = BEGIN;
 	  }
-	  case BEGIN:
+	  case BEGIN: // Connection established. Request charger to begin delivering power
 	  {
 		  if(power_init == 0)
 		  {
+			  if(power_init_timeout == 2)
+				  connection_state = HANDSHAKE;
+
 			  power_init = uart_init_power(huart1);
+			  power_init_timeout++; // Increment the timeout counter.
 			  break;
 		  }
 		  else
 		  {
+			  power_init_timeout = 0;
 			  connection_state = UPDATE_DATA;
 		  }
 	  }
-	  case UPDATE_DATA:
+	  case UPDATE_DATA: // Update the charger with relevant data
 	  {
 		  // Calcultate and / or transmit State of Charge (SoC) here.
 		  // Transmit temperature readings here.
@@ -186,11 +197,16 @@ int main(void)
 		  }
 		  break;
 	  }
-	  case END:
+	  case END: // Battery is fully charged. Request charger stop sending power
 	  {
+		  if(power_end_timeout == 2)
+			  connection_state = HANDSHAKE;
+
 		  power_end = uart_terminate_power(huart1);
+		  power_end_timeout++;
 		  if(power_end == 1)
 		  {
+			  power_end_timeout = 0;
 			  connection_ok = 0;
 			  connection_state = HANDSHAKE;
 		  }
