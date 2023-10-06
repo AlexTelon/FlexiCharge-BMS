@@ -5,13 +5,13 @@
 
 #include "bms_uart_communication.h"
 
-	// All the commands that will be sent to and from the BMS.
+// All the commands that will be sent to and from the BMS.
 const char* ok = "ok";
-const char* voltage = "voltage:"; // Remove \n
+const char* voltage = "voltage:"; // No newline character since the uart_send_number function adds one after the number.
 const char* begin = "begin\n";
 const char* end = "end\n";
-const char* charge = "charge:"; // Remove \n
-const char* temp = "temp:"; // Remove \n
+const char* charge = "charge:";
+const char* temp = "temp:";
 const char* connect = "connect\n";
 const char* beep = "beep\n";
 
