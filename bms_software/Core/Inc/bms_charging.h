@@ -19,12 +19,12 @@ enum charging_state{
 	constant_current,
 	constant_voltage,
 	no_charge,
-	unknown
 };
 
 struct battery_cell {
 	uint16_t voltage; //Cells voltage
 	uint16_t charging_current; //Charging current in mA flowing to the cell
+	uint16_t relay_pin;
 	bool is_charging;
 	enum charging_state state; //The cells charging state
 };
