@@ -191,6 +191,13 @@ int main(void)
 	  {
 		  // Calcultate and / or transmit State of Charge (SoC) here.
 		  // Transmit temperature readings here.
+		  // Mock data
+		  if(cell_voltage < 3500)
+			  uart_data_charge(huart1, cell_voltage/30);
+		  if(cell_voltage > 3500)
+		  {
+			  connection_state = END;
+		  }
 		  if(state_of_charge == 100)
 		  {
 			  connection_state = END;
