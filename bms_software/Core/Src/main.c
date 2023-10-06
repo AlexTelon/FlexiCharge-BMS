@@ -68,6 +68,10 @@ uint8_t heartbeat = 0;
 uint8_t power_init = 0;
 uint8_t power_end = 0;
 
+uint8_t state_of_charge;
+
+enum CONNECTION_STATE connection_state = HANDSHAKE;
+
 //Used for testing current reading implementation
 float mAmp = 0;
 uint16_t adc_drop = 0;
@@ -146,6 +150,54 @@ int main(void)
 	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
 
 	  // Rewrite to use a case statement.
+	  switch(connection_state)
+	  {
+	  case HANDSHAKE:
+	  {
+		  if(connection_ok == 0)
+		  {
+			  connection_ok = uart_handshake(5, huart1);
+			  power_end = 0;
+			  power_init = 0;
+			  break;
+		  }
+		  else
+			  connection_state = BEGIN;
+	  }
+	  case BEGIN:
+	  {
+		  if(power_init == 0)
+		  {
+			  power_init = uart_init_power(huart1);
+			  break;
+		  }
+		  else
+		  {
+			  connection_state = UPDATE_DATA;
+		  }
+	  case UPDATE_DATA:
+	  {
+		  // Calcultate and / or transmit State of Charge (SoC) here.
+		  // Transmit temperature readings here.
+		  if(state_of_charge == 100)
+		  {
+			  connection_state = END;
+		  }
+		  break;
+	  }
+	  case END:
+	  {
+		  power_end = uart_terminate_power(huart1);
+		  if(power_end == 1)
+		  {
+			  connection_ok = 0;
+			  connection_state = HANDSHAKE;
+		  }
+		  break;
+	  }
+	  }
+
+	  }
 
 	  // Request connection untill connection is established.
 	  if(connection_ok == 0)
