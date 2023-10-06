@@ -12,8 +12,7 @@
 // Enum for the different states of connection.
 enum CONNECTION_STATE
 {
-	CONNECT, // Awaiting connection
-	HANDSHAKE, // Negotiate voltage level
+	HANDSHAKE, // Await connection and negotiate voltage level
 	BEGIN, // Charger sends power
 	UPDATE_DATA, // BMS updates Charger with data as it changes
 	END // Battery is fully charged
