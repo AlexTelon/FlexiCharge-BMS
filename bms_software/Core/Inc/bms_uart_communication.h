@@ -22,7 +22,7 @@ enum CONNECTION_STATE
 // Function prototypes
 void uart_send_string(const char* command, UART_HandleTypeDef uart, uint8_t length);
 
-void uart_send_number(uint8_t n, UART_HandleTypeDef uart);
+void uart_send_number(int n, UART_HandleTypeDef uart);
 
 uint8_t uart_establish_connection(UART_HandleTypeDef uart);
 

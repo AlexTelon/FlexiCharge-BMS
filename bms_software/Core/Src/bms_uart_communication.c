@@ -24,11 +24,11 @@ void uart_send_string(const char* command, UART_HandleTypeDef uart, uint8_t leng
 	}
 }
 
-void uart_send_number(uint8_t n, UART_HandleTypeDef uart)
+void uart_send_number(int n, UART_HandleTypeDef uart)
 {
 	  const uint8_t buff_size = 4;
 	  char out[buff_size];
-	  int length = snprintf(out, buff_size, "%hu", n);
+	  int length = snprintf(out, buff_size, "%i", n);
 
 	  uart_send_string(out, uart, length); // Test with buff_size instead of length. Append \n.
 }
@@ -48,7 +48,7 @@ uint8_t uart_receive_ok(UART_HandleTypeDef uart)
 // Function to establish connection. Sends the "connect" command and returns the response.
 uint8_t uart_establish_connection(UART_HandleTypeDef uart)
 {
-	uart_send_string(connect, uart, strlen(connect)); // strlen instead of sizeof?
+	uart_send_string(connect, uart, strlen(connect));
 
 	return uart_receive_ok(uart);
 }
