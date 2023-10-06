@@ -175,6 +175,7 @@ int main(void)
 		  {
 			  connection_state = UPDATE_DATA;
 		  }
+	  }
 	  case UPDATE_DATA:
 	  {
 		  // Calcultate and / or transmit State of Charge (SoC) here.
@@ -197,7 +198,6 @@ int main(void)
 	  }
 	  }
 
-	  }
 
 	  // Request connection untill connection is established.
 	  if(connection_ok == 0)
