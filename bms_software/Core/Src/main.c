@@ -76,6 +76,8 @@ uint8_t power_end_timeout = 0;
 // The estimated State of Charge
 uint8_t state_of_charge;
 
+// A variable to control the communication logic.
+// Initialized to the handshake state.
 enum CONNECTION_STATE connection_state = HANDSHAKE;
 
 //Used for testing current reading implementation
