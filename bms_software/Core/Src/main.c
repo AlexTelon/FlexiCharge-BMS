@@ -145,6 +145,8 @@ int main(void)
 
 	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
 
+	  // Rewrite to use a case statement.
+
 	  // Request connection untill connection is established.
 	  if(connection_ok == 0)
 	  {
