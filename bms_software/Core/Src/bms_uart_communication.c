@@ -7,11 +7,11 @@
 
 	// All the commands that will be sent to and from the BMS.
 const char* ok = "ok";
-const char* voltage = "voltage:\n"; // Remove \n
+const char* voltage = "voltage:"; // Remove \n
 const char* begin = "begin\n";
 const char* end = "end\n";
-const char* charge = "charge:\n"; // Remove \n
-const char* temp = "temp:\n"; // Remove \n
+const char* charge = "charge:"; // Remove \n
+const char* temp = "temp:"; // Remove \n
 const char* connect = "connect\n";
 const char* beep = "beep\n";
 
@@ -26,11 +26,11 @@ void uart_send_string(const char* command, UART_HandleTypeDef uart, uint8_t leng
 
 void uart_send_number(int n, UART_HandleTypeDef uart)
 {
-	  const uint8_t buff_size = 4;
+	  const uint8_t buff_size = 5;
 	  char out[buff_size];
-	  int length = snprintf(out, buff_size, "%i", n);
+	  snprintf(out, buff_size, "%i\n", n);
 
-	  uart_send_string(out, uart, length); // Test with buff_size instead of length. Append \n.
+	  uart_send_string(out, uart, buff_size); // Apend a \n after a number has been sent.
 }
 
 // This function checks for a response fromt the charger, and returns a 1 if the expected "ok" command was received.
