@@ -24,3 +24,19 @@ Added files:
 - bms_constants.h
 
 The implementation uses two ADC channels with DMA in a circular buffer and a timer with interrupts with the frequency of 10Hz. The ADC and timer is started in main.c.
+
+## UART Communication
+
+This includes two new files:  
+- bms_uart_communication.h
+- bms_uart_communication.c  
+
+This software:
+- Sets up USART1 in the .ioc-file with the default settings (the same settings as can be found in the communication specification document).  
+- Implements the functionality described in the communication specification.  
+- Uses an enum, found in the .h-file, to control a switch in the main loop.  
+This implementation is currently using blocking calls to the UART peripheral.  
+### Connections
+The software uses the following pinout
+- TX: PA9 (D8 on the Nucleo board).
+- RX: PA10 (D8).
