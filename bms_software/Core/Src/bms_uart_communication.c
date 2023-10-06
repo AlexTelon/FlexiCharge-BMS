@@ -7,11 +7,11 @@
 
 	// All the commands that will be sent to and from the BMS.
 const char* ok = "ok";
-const char* voltage = "voltage:\n";
+const char* voltage = "voltage:\n"; // Remove \n
 const char* begin = "begin\n";
 const char* end = "end\n";
-const char* charge = "charge:\n";
-const char* temp = "temp:\n";
+const char* charge = "charge:\n"; // Remove \n
+const char* temp = "temp:\n"; // Remove \n
 const char* connect = "connect\n";
 const char* beep = "beep\n";
 
@@ -30,7 +30,7 @@ void uart_send_number(uint8_t n, UART_HandleTypeDef uart)
 	  char out[buff_size];
 	  int length = snprintf(out, buff_size, "%hu", n);
 
-	  uart_send_string(out, uart, length);
+	  uart_send_string(out, uart, length); // Test with buff_size instead of length. Append \n.
 }
 
 // This function checks for a response fromt the charger, and returns a 1 if the expected "ok" command was received.
@@ -48,12 +48,12 @@ uint8_t uart_receive_ok(UART_HandleTypeDef uart)
 // Function to establish connection. Sends the "connect" command and returns the response.
 uint8_t uart_establish_connection(UART_HandleTypeDef uart)
 {
-	uart_send_string(connect, uart, sizeof(connect)+3);
+	uart_send_string(connect, uart, sizeof(connect)+3); // strlen instead of sizeof?
 
 	return uart_receive_ok(uart);
 }
 
-uint8_t uart_handshake(uint8_t n, UART_HandleTypeDef uart)
+uint8_t uart_handshake(uint8_t n, UART_HandleTypeDef uart) // Rewrite so it can handle taking in negative numbers.
 {
 	uint8_t result = 0;
 	result = uart_establish_connection(uart);
