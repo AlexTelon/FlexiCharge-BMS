@@ -48,7 +48,7 @@ uint8_t uart_receive_ok(UART_HandleTypeDef uart)
 // Function to establish connection. Sends the "connect" command and returns the response.
 uint8_t uart_establish_connection(UART_HandleTypeDef uart)
 {
-	uart_send_string(connect, uart, sizeof(connect)+3); // strlen instead of sizeof?
+	uart_send_string(connect, uart, strlen(connect)); // strlen instead of sizeof?
 
 	return uart_receive_ok(uart);
 }
@@ -59,7 +59,7 @@ uint8_t uart_handshake(uint8_t n, UART_HandleTypeDef uart) // Rewrite so it can 
 	result = uart_establish_connection(uart);
 	if(result == 1)
 	{
-		uart_send_string(voltage, uart, sizeof(voltage)+4);
+		uart_send_string(voltage, uart, strlen(voltage));
 		uart_send_number(n, uart);
 	}
 	return result;
@@ -67,21 +67,21 @@ uint8_t uart_handshake(uint8_t n, UART_HandleTypeDef uart) // Rewrite so it can 
 
 uint8_t uart_init_power(UART_HandleTypeDef uart)
 {
-	uart_send_string(begin, uart, sizeof(begin)+2);
+	uart_send_string(begin, uart, strlen(begin));
 
 	return uart_receive_ok(uart);
 }
 
 uint8_t uart_terminate_power(UART_HandleTypeDef uart)
 {
-	uart_send_string(end, uart, sizeof(end)+2);
+	uart_send_string(end, uart, strlen(end));
 
 	return uart_receive_ok(uart);
 }
 
 uint8_t uart_data_temp(UART_HandleTypeDef uart, uint8_t data)
 {
-	uart_send_string(temp, uart, sizeof(temp)+3);
+	uart_send_string(temp, uart, strlen(temp));
 	uart_send_number(data, uart);
 
 	return uart_receive_ok(uart);
@@ -89,7 +89,7 @@ uint8_t uart_data_temp(UART_HandleTypeDef uart, uint8_t data)
 
 uint8_t uart_data_charge(UART_HandleTypeDef uart, uint8_t data)
 {
-	uart_send_string(charge, uart, sizeof(charge)+4);
+	uart_send_string(charge, uart, strlen(charge));
 	uart_send_number(data, uart);
 
 	return uart_receive_ok(uart);
@@ -97,7 +97,7 @@ uint8_t uart_data_charge(UART_HandleTypeDef uart, uint8_t data)
 
 uint8_t uart_heartbeat(UART_HandleTypeDef uart)
 {
-	uart_send_string(beep, uart, sizeof(beep)+2);
+	uart_send_string(beep, uart, strlen(beep));
 
 	return uart_receive_ok(uart);
 }
