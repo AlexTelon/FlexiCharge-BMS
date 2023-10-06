@@ -24,6 +24,8 @@ void uart_send_string(const char* command, UART_HandleTypeDef uart, uint8_t leng
 	}
 }
 
+// A function to send numbers over uart. Can handle negative numbers.
+// Apends a newline character to each number for easier extraction.
 void uart_send_number(int n, UART_HandleTypeDef uart)
 {
 	  const uint8_t buff_size = 5;
@@ -39,7 +41,7 @@ uint8_t uart_receive_ok(UART_HandleTypeDef uart)
 {
 	uint8_t response[2];
 
-	if(HAL_UART_Receive(&uart, response, 2, 1000) == HAL_OK)
+	if(HAL_UART_Receive(&uart, response, 2, RESPONSE_DELAY) == HAL_OK)
 		if((char)response[0] == 'o' && (char)response[1] == 'k')
 			return 1;
 	return 0;
@@ -53,6 +55,7 @@ uint8_t uart_establish_connection(UART_HandleTypeDef uart)
 	return uart_receive_ok(uart);
 }
 
+// Function to establish connection and negotiate voltage levels.
 uint8_t uart_handshake(uint8_t n, UART_HandleTypeDef uart) // Rewrite so it can handle taking in negative numbers.
 {
 	uint8_t result = 0;
@@ -65,6 +68,7 @@ uint8_t uart_handshake(uint8_t n, UART_HandleTypeDef uart) // Rewrite so it can 
 	return result;
 }
 
+// Initialize the power delivery.
 uint8_t uart_init_power(UART_HandleTypeDef uart)
 {
 	uart_send_string(begin, uart, strlen(begin));
@@ -72,6 +76,7 @@ uint8_t uart_init_power(UART_HandleTypeDef uart)
 	return uart_receive_ok(uart);
 }
 
+// Terminate power delivery.
 uint8_t uart_terminate_power(UART_HandleTypeDef uart)
 {
 	uart_send_string(end, uart, strlen(end));
@@ -79,6 +84,7 @@ uint8_t uart_terminate_power(UART_HandleTypeDef uart)
 	return uart_receive_ok(uart);
 }
 
+// Send updates about temperature.
 uint8_t uart_data_temp(UART_HandleTypeDef uart, uint8_t data)
 {
 	uart_send_string(temp, uart, strlen(temp));
@@ -87,6 +93,7 @@ uint8_t uart_data_temp(UART_HandleTypeDef uart, uint8_t data)
 	return uart_receive_ok(uart);
 }
 
+// Send updates about state of charge.
 uint8_t uart_data_charge(UART_HandleTypeDef uart, uint8_t data)
 {
 	uart_send_string(charge, uart, strlen(charge));
@@ -95,6 +102,7 @@ uint8_t uart_data_charge(UART_HandleTypeDef uart, uint8_t data)
 	return uart_receive_ok(uart);
 }
 
+// Ensure the charger is connected.
 uint8_t uart_heartbeat(UART_HandleTypeDef uart)
 {
 	uart_send_string(beep, uart, strlen(beep));
