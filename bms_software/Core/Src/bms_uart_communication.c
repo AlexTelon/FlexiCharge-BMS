@@ -28,9 +28,9 @@ void uart_send_number(int n, UART_HandleTypeDef uart)
 {
 	  const uint8_t buff_size = 5;
 	  char out[buff_size];
-	  snprintf(out, buff_size, "%i\n", n);
+	  uint8_t length = snprintf(out, buff_size, "%i\n", n);
 
-	  uart_send_string(out, uart, buff_size); // Apend a \n after a number has been sent.
+	  uart_send_string(out, uart, length); // Apend a \n after a number has been sent.
 }
 
 // This function checks for a response fromt the charger, and returns a 1 if the expected "ok" command was received.
