@@ -9,6 +9,15 @@
 #include "stm32f4xx_hal.h"
 #include "stdio.h"
 
+// Enum for the different states of connection.
+enum CONNECTION_STATE
+{
+	CONNECT, // Awaiting connection
+	HANDSHAKE, // Negotiate voltage level
+	BEGIN, // Charger sends power
+	UPDATE_DATA, // BMS updates Charger with data as it changes
+	END // Battery is fully charged
+};
 
 // Function prototypes
 void uart_send_string(const char* command, UART_HandleTypeDef uart, uint8_t length);
