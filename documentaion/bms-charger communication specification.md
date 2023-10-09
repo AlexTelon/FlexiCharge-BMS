@@ -13,12 +13,12 @@ Continued failed acknowledgements shall result in the Charger not sending any po
 The UART shall have the following settings
 - Baudrate: 115200
 - Parity: none
-- Word length: nine (9) bit including parity
+- Word length: eight (8) bit including parity
 - Stop bit: one (1)
 
 
 ## Commands
-
+### The commands are as follows
 - ok. Acknowledge a successful transmission.
 - voltage. BMS requires a specific voltage level from the charger.
 - begin. BMS wants Charger to start sending power.
@@ -27,6 +27,8 @@ The UART shall have the following settings
 - temp. BMS wants to report the current temperature of the battery. BMS will send a temperature after having received the “ok” -command.
 - connect. This command will be sent by the BMS to let the Charger know a device is connected.
 - beep. The heartbeat command, this will be sent regularly, and failure to receive one of these must cause the Charger to turn off power delivery.
+
+#### Note: All transmissions are terminated with a newline character.
 
 ## Handshake
 
