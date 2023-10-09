@@ -69,12 +69,7 @@ void choose_charging_cells(struct battery_cell *cell){
 		else if (cell[i].state > cell[i + 1].state){
 			charging_cell = i+1;
 		}
-		else if (cell[i].voltage < cell[i+1].voltage){ //the cells are in the same state
-			charging_cell = i;
-		}
-		else if (cell[i].voltage > cell[i+1].voltage){
-			charging_cell = i+1;
-		}
+		//else the cells are in the same state
 
 		else charging_cell = 99;
 	}
