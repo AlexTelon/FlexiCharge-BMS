@@ -126,14 +126,27 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  ch1_adc_value = adc_value[0];
-	  ch2_adc_value = adc_value[1];
-	  ch4_adc_value = adc_value[2];
+	  HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_SET);//Active low
+	  HAL_GPIO_WritePin(GPIOB, cell2_relay_Pin, GPIO_PIN_SET);
 
-	  adc_drop = adc_resistor_drop(ch2_adc_value, ch4_adc_value);
-	  mAmp = convert_adc_to_mAmp(adc_drop);
+	  HAL_Delay(2000);
 
-	  cell_voltage = convert_rawADC_to_voltage(ch1_adc_value);
+	  HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_RESET);//Active low
+	  HAL_GPIO_WritePin(GPIOB, cell2_relay_Pin, GPIO_PIN_RESET);
+
+	  HAL_Delay(2000);
+
+	  HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_RESET); //pre charge relay
+	  HAL_GPIO_WritePin(GPIOB, cc_relay_Pin, GPIO_PIN_RESET); //constant current
+	  HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_RESET); //constant voltage
+
+	  HAL_Delay(2000);
+
+	  HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_RESET); //pre charge relay
+	  HAL_GPIO_WritePin(GPIOB, cc_relay_Pin, GPIO_PIN_RESET); //constant current
+	  HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_RESET); //constant voltage
+
+	  HAL_Delay(2000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
