@@ -9,8 +9,8 @@
 
 uint8_t nbr_charging_cells = 0;
 
-//Cells we will charge
-struct battery_cell cells[2];
+//Array which contains our cells
+struct battery_cell cells[1];
 
 struct battery_cell *battery_cell_init(){
 
@@ -30,8 +30,8 @@ struct battery_cell *battery_cell_init(){
 	cell2.relay_pin = cell1_relay_Pin;
 	cell2.state = no_charge;
 
-	 cells[0] = cell1;
-	 cells[1] = cell2;
+	cells[0] = cell1;
+	//cells[1] = cell2;
 
 	return cells;
 }
