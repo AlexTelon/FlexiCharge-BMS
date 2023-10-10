@@ -35,8 +35,10 @@ This software:
 - Sets up USART1 in the .ioc-file with the default settings (the same settings as can be found in the communication specification document).  
 - Implements the functionality described in the communication specification.  
 - Uses an enum, found in the .h-file, to control a switch in the main loop.  
-This implementation is currently using blocking calls to the UART peripheral.  
+This implementation is currently using blocking calls to the UART peripheral.
+
 ### Connections
 The software uses the following pinout
 - TX: PA9 (D8 on the Nucleo board).
 - RX: PA10 (D8).
+#### Note: To be able to send floats over UART one needs to set up the CubeIDE to work with floats.
