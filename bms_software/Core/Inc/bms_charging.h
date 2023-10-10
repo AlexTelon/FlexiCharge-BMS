@@ -31,7 +31,7 @@ struct battery_cell {
 
 void open_realys();
 
-struct battery_cell *battery_cell_init(struct battery_cell *cell);
+struct battery_cell *battery_cell_init();
 
 void get_cell_info(struct battery_cell *cell, uint16_t *adc);
 
@@ -43,7 +43,7 @@ void get_cells_state(struct battery_cell *cell);
 
 void choose_charging_cells(struct battery_cell *cell);
 
-void switch_charging_state(enum charging_state state);
+void switch_charging_state(struct battery_cell *cell);
 
 void battery_pre_charge(struct battery_cell cell);
 

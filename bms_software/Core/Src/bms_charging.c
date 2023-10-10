@@ -9,7 +9,34 @@
 
 uint8_t nbr_charging_cells = 0;
 
-void open_realys(){
+//Cells we will charge
+struct battery_cell cells[2];
+
+struct battery_cell *battery_cell_init(){
+
+	//The cells that we are charging
+	struct battery_cell cell1;
+	struct battery_cell cell2;
+
+	cell1.charging_current = 0;
+	cell1.voltage = 0;
+	cell1.is_charging = false;
+	cell1.relay_pin = cell1_relay_Pin;
+	cell1.state = no_charge;
+
+	cell2.charging_current = 0;
+	cell2.voltage = 0;
+	cell2.is_charging = false;
+	cell2.relay_pin = cell1_relay_Pin;
+	cell2.state = no_charge;
+
+	 cells[0] = cell1;
+	 cells[1] = cell2;
+
+	return cells;
+}
+
+void open_relays(){
 	//turns off/opens all relays
 	HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_SET);//Active low
 	HAL_GPIO_WritePin(GPIOB, cell2_relay_Pin, GPIO_PIN_SET);
@@ -103,19 +130,19 @@ void switch_charging_state(struct battery_cell *cell){
 }
 
 void battery_pre_charge(struct battery_cell cell){
-	open_realys(); //For safe switching
+	open_relays(); //For safe switching
 	HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_RESET);//Close pre charge relay
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
 }
 
 void battery_constant_current(struct battery_cell cell){
-	open_realys();
+	open_relays();
 	HAL_GPIO_WritePin(GPIOB, cc_relay_Pin, GPIO_PIN_RESET);//Close cc charge relay
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
 }
 
 void battery_constant_voltage(struct battery_cell cell){
-	open_realys();
+	open_relays();
 	HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_RESET);//Close cv charge relay
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
 }
