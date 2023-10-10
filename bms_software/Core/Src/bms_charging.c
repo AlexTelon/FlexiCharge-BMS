@@ -60,7 +60,7 @@ void get_cells_state(struct battery_cell *cell){
 	}
 }
 
-void choose_charging_cells(struct battery_cell *cell){
+void choose_charging_cells(struct battery_cell *cell){//Not finished
 	uint8_t charging_cell = 99;
 	for(uint8_t i = 0; i < sizeof(cell) - 1; i++){
 		if(cell[i].state < cell[i + 1].state){
