@@ -18,10 +18,7 @@ const char* beep = "beep\n";
 // Function to send a string over UART.
 void uart_send_string(const char* command, UART_HandleTypeDef uart, uint8_t length)
 {
-	for(int i = 0; i <= length; i++)
-	{
-		HAL_UART_Transmit(&uart, &command[i], 1, 200);
-	}
+	HAL_UART_Transmit(&uart, command, length, 200);
 }
 
 // A function to send numbers over uart. Can handle negative numbers.
@@ -30,9 +27,21 @@ void uart_send_number(int n, UART_HandleTypeDef uart)
 {
 	  const uint8_t buff_size = 5;
 	  char out[buff_size];
-	  uint8_t length = snprintf(out, buff_size, "%i\n", n);
+	  uint8_t length = snprintf(out, buff_size, "%i\n", n); // Normal printf-formatting.
 
-	  uart_send_string(out, uart, length); // Apend a \n after a number has been sent.
+	  uart_send_string(out, uart, length);
+}
+
+// A function to send numbers over uart, used for sending the initial voltage level.
+// Functionaly identical to the send_number function, but sending an integer will result in it being
+// sent with a decimal point and a 0 at the end.
+void uart_send_float(float n, UART_HandleTypeDef uart)
+{
+	  const uint8_t buff_size = 10;
+	  char out[buff_size];
+	  uint8_t length = snprintf(out, buff_size, "%3.1f\n", n); // Format the resulting string.
+
+	  uart_send_string(out, uart, length);
 }
 
 // This function checks for a response fromt the charger, and returns a 1 if the expected "ok" command was received.
@@ -43,7 +52,11 @@ uint8_t uart_receive_ok(UART_HandleTypeDef uart)
 
 	if(HAL_UART_Receive(&uart, response, 2, RESPONSE_DELAY) == HAL_OK)
 		if((char)response[0] == 'o' && (char)response[1] == 'k')
+		{
+			response[0] = 0;
+			response[1] = 0;
 			return 1;
+		}
 	return 0;
 }
 
@@ -56,14 +69,14 @@ uint8_t uart_establish_connection(UART_HandleTypeDef uart)
 }
 
 // Function to establish connection and negotiate voltage levels.
-uint8_t uart_handshake(uint8_t n, UART_HandleTypeDef uart) // Rewrite so it can handle taking in negative numbers.
+uint8_t uart_handshake(float n, UART_HandleTypeDef uart) // Rewrite so it can handle taking in negative numbers.
 {
 	uint8_t result = 0;
 	result = uart_establish_connection(uart);
 	if(result == 1)
 	{
 		uart_send_string(voltage, uart, strlen(voltage));
-		uart_send_number(n, uart);
+		uart_send_float(n, uart);
 	}
 	return result;
 }
