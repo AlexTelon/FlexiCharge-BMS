@@ -147,6 +147,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  // Dummy data:
+	  state_of_charge++;
+	  if(state_of_charge == 100)
+		  state_of_charge = 0;
+	  // /Dummy data.
 
 	  ch1_adc_value = adc_value[0];
 	  ch2_adc_value = adc_value[1];
@@ -181,7 +186,7 @@ int main(void)
 				  connection_state = HANDSHAKE;
 				  connection_ok = 0;
 			  }
-
+			  HAL_Delay(500); // A delay to allow the charger time to set up the requested voltage.
 			  power_init = uart_init_power(huart1);
 			  power_init_timeout++; // Increment the timeout counter.
 			  break;
@@ -196,13 +201,8 @@ int main(void)
 	  {
 		  // Calcultate and / or transmit State of Charge (SoC) here.
 		  // Transmit temperature readings here.
-		  // Mock data
-		  if(cell_voltage < 3500)
-			  uart_data_charge(huart1, cell_voltage/30);
-		  if(cell_voltage > 3500)
-		  {
-			  connection_state = END;
-		  }
+		  // Mock data at the moment.
+		  uart_data_charge(huart1, state_of_charge);
 		  if(state_of_charge == 100)
 		  {
 			  connection_state = END;
@@ -231,8 +231,8 @@ int main(void)
 
 	  // The heartbeat should be sent each iteration.
 	  if(connection_ok == 1)
-		  heartbeat = uart_heartbeat(huart1);
-
+		  if(power_init == 1)
+			  heartbeat = uart_heartbeat(huart1);
 
     /* USER CODE END WHILE */
 
