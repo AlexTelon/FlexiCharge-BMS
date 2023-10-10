@@ -144,7 +144,9 @@ void battery_constant_voltage(struct battery_cell cell){
 }
 
 void charge_loop(struct battery_cell *cell, uint16_t *adc_voltage_arr, uint16_t read_current){
-
-
+	get_cells_voltage(cell, adc_voltage_arr);
+	get_cells_charging_current(cell, read_current);
+	get_cells_state(cell);
+	switch_charging_state(cell);
 }
 
