@@ -62,6 +62,7 @@ uint16_t ch1_adc_value = 0;
 uint16_t ch2_adc_value = 0;
 uint16_t ch4_adc_value = 0;
 uint16_t charge_loop_counter = 0;
+uint8_t charge_loop_delay = 30; //3 sec
 
 //Used for testing current reading implementation
 float mAmp = 0;
@@ -84,9 +85,10 @@ static void MX_TIM9_Init(void);
 /* USER CODE BEGIN 0 */
 
 
-void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim){
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	charge_loop_counter++;
 }
+
 
 /* USER CODE END 0 */
 
@@ -126,6 +128,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   // Start timer for ADC Interrupt (10Hz)
   HAL_TIM_Base_Start(&htim3);
+  HAL_TIM_Base_Start_IT(&htim9);
 
   // Start ADC with DMA
   HAL_ADC_Start_DMA(&hadc1, adc_value, 3);
@@ -135,7 +138,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(charge_loop_counter == 100){
+	  if(charge_loop_counter == charge_loop_delay){
 		  HAL_GPIO_TogglePin(GPIOA, LD2_Pin);
 		  charge_loop_counter = 0;
 	  }
@@ -326,9 +329,9 @@ static void MX_TIM9_Init(void)
 
   /* USER CODE END TIM9_Init 1 */
   htim9.Instance = TIM9;
-  htim9.Init.Prescaler = 840 -1;
+  htim9.Init.Prescaler = 840;
   htim9.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim9.Init.Period = 10000 -1;
+  htim9.Init.Period = 10000;
   htim9.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim9.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim9) != HAL_OK)
