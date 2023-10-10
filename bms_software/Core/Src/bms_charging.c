@@ -81,41 +81,42 @@ void switch_charging_state(struct battery_cell *cell){
 		switch (cell[i].state)
 		{
 			case pre_charge:
+				battery_pre_charge(cell[i]);
 				break;
 
 			case constant_current:
-
+				battery_constant_current(cell[i]);
 				break;
 
 			case constant_voltage:
-
+				battery_constant_voltage(cell[i]);
 				break;
 
 			case no_charge:
-
+				open_relays();
 				break;
 
 			default:
-
+				open_relays();
 		}
 	}
 }
 
 void battery_pre_charge(struct battery_cell cell){
 	open_realys(); //For safe switching
-	HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_SET);//Open pre charge relay
+	HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_RESET);//Close pre charge relay
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
 }
 
 void battery_constant_current(struct battery_cell cell){
 	open_realys();
-	HAL_GPIO_WritePin(GPIOB, cc_relay_Pin, GPIO_PIN_SET);//Open cc charge relay
+	HAL_GPIO_WritePin(GPIOB, cc_relay_Pin, GPIO_PIN_RESET);//Close cc charge relay
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
 }
 
 void battery_constant_voltage(struct battery_cell cell){
 	open_realys();
-	HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_SET);//Open cv charge relay
+	HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_RESET);//Close cv charge relay
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
 }
 
