@@ -25,11 +25,13 @@ void uart_send_string(const char* command, UART_HandleTypeDef uart, uint8_t leng
 
 void uart_send_number(int n, UART_HandleTypeDef uart);
 
+void uart_send_float(float n, UART_HandleTypeDef uart);
+
 uint8_t uart_establish_connection(UART_HandleTypeDef uart);
 
 uint8_t uart_receive_ok(UART_HandleTypeDef uart);
 
-uint8_t uart_handshake(uint8_t voltage, UART_HandleTypeDef uart);
+uint8_t uart_handshake(float voltage, UART_HandleTypeDef uart);
 
 uint8_t uart_init_power(UART_HandleTypeDef uart);
 
