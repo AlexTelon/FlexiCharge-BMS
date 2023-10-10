@@ -75,3 +75,39 @@ void choose_charging_cells(struct battery_cell *cell){//Not finished
 	}
 }
 
+void switch_charging_state(struct battery_cell *cell){
+
+	for(uint8_t i = 0; i < sizeof(cell); i++){
+		switch (cell[i].state)
+		{
+			case pre_charge:
+				break;
+
+			case constant_current:
+
+				break;
+
+			case constant_voltage:
+
+				break;
+
+			case no_charge:
+
+				break;
+
+			default:
+
+		}
+	}
+}
+
+void battery_pre_charge(struct battery_cell cell){
+	open_realys();
+	HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_SET);//Open pre charge relay
+	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
+}
+
+void battery_constant_current(struct battery_cell cell);
+
+void battery_constant_voltage(struct battery_cell cell);
+

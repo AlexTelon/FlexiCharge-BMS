@@ -45,11 +45,11 @@ void choose_charging_cells(struct battery_cell *cell);
 
 void switch_charging_state(enum charging_state state);
 
-void battery_pre_charge(struct battery_cell *cell);
+void battery_pre_charge(struct battery_cell cell);
 
-void battery_constant_current(struct battery_cell *cell);
+void battery_constant_current(struct battery_cell cell);
 
-void battery_constant_voltage(struct battery_cell *cell);
+void battery_constant_voltage(struct battery_cell cell);
 
 void monitor_cell_charging();
 
