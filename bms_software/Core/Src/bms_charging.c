@@ -9,18 +9,16 @@
 
 uint8_t nbr_charging_cells = 0;
 
-//Array which contains our cells
-struct battery_cell cells[1];
 
-struct battery_cell *battery_cell_init(){
 
+void battery_cell_init(struct battery_cell *cells){
 	//The cells that we are charging
 	struct battery_cell cell1;
 	struct battery_cell cell2;
 
 	cell1.charging_current = 0;
 	cell1.voltage = 0;
-	cell1.is_charging = false;
+	cell1.is_charging = true; // Because we only charge one cell for now
 	cell1.relay_pin = cell1_relay_Pin;
 	cell1.state = no_charge;
 
@@ -32,8 +30,6 @@ struct battery_cell *battery_cell_init(){
 
 	cells[0] = cell1;
 	//cells[1] = cell2;
-
-	return cells;
 }
 
 void open_relays(){
@@ -145,5 +141,10 @@ void battery_constant_voltage(struct battery_cell cell){
 	open_relays();
 	HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_RESET);//Close cv charge relay
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
+}
+
+void charge_loop(struct battery_cell *cell, uint16_t *adc_voltage_arr, uint16_t read_current){
+
+
 }
 

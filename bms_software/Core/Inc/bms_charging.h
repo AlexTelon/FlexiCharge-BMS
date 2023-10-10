@@ -31,7 +31,7 @@ struct battery_cell {
 
 void open_realys();
 
-struct battery_cell *battery_cell_init();
+void battery_cell_init(struct battery_cell *cells);
 
 void get_cell_info(struct battery_cell *cell, uint16_t *adc);
 
@@ -52,6 +52,8 @@ void battery_constant_current(struct battery_cell cell);
 void battery_constant_voltage(struct battery_cell cell);
 
 void monitor_cell_charging();
+
+void charge_loop(struct battery_cell *cell, uint16_t *adc_voltage_arr, uint16_t read_current);
 
 
 

@@ -126,27 +126,27 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_SET);//Active low
-	  HAL_GPIO_WritePin(GPIOB, cell2_relay_Pin, GPIO_PIN_SET);
-
-	  HAL_Delay(2000);
-
 	  HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_RESET);//Active low
 	  HAL_GPIO_WritePin(GPIOB, cell2_relay_Pin, GPIO_PIN_RESET);
 
-	  HAL_Delay(2000);
+	  HAL_Delay(1000);
+
+	  HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_SET);//Active low
+	  HAL_GPIO_WritePin(GPIOB, cell2_relay_Pin, GPIO_PIN_SET);
+
+	  HAL_Delay(1000);
 
 	  HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_RESET); //pre charge relay
 	  HAL_GPIO_WritePin(GPIOB, cc_relay_Pin, GPIO_PIN_RESET); //constant current
 	  HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_RESET); //constant voltage
 
-	  HAL_Delay(2000);
+	  HAL_Delay(1000);
 
-	  HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_RESET); //pre charge relay
-	  HAL_GPIO_WritePin(GPIOB, cc_relay_Pin, GPIO_PIN_RESET); //constant current
-	  HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_RESET); //constant voltage
+	  HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_SET); //pre charge relay
+	  HAL_GPIO_WritePin(GPIOB, cc_relay_Pin, GPIO_PIN_SET); //constant current
+	  HAL_GPIO_WritePin(GPIOB, cv_relay_Pin, GPIO_PIN_SET); //constant voltage
 
-	  HAL_Delay(2000);
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
