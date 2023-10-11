@@ -12,5 +12,7 @@
 #define VOLTAGE_HIGH 0 // Dummy
 #define VOLTAGE_LOW 0 // Dummy
 
+// Function prototypes
+uint8_t soc_estimation(uint16_t current_voltage_level);
 
 #endif /* INC_BMS_SOC_ESTIMATION_H_ */
