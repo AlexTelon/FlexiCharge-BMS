@@ -51,7 +51,7 @@ void battery_constant_voltage(struct battery_cell cell);
 
 void monitor_cell_charging();
 
-void charge_loop(struct battery_cell *cell, uint16_t *adc_voltage_arr, uint16_t read_current);
+void charge_loop(struct battery_cell *cells, uint16_t *adc_voltage_arr, uint16_t read_current);
 
 
 

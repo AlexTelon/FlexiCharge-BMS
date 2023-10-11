@@ -7,7 +7,7 @@
 
 #include "bms_charging.h"
 
-uint8_t nbr_charging_cells = 0;
+uint8_t nbr_charging_cells = 0;//Not used
 
 
 
@@ -50,6 +50,7 @@ void get_cells_charging_current(struct battery_cell *cell, uint16_t read_current
 	for(int8_t i = 0; i < sizeof(cell); i++){
 		if(cell[i].is_charging){ //should only read charging current if the cell i charging
 			HAL_GPIO_WritePin(GPIOB, cell[i].relay_pin, GPIO_PIN_RESET);//Active low
+			HAL_Delay(3);//Give time for the adc to read
 			cell[i].charging_current = read_current;
 		}
 		else cell[i].charging_current = 0;
@@ -59,6 +60,7 @@ void get_cells_charging_current(struct battery_cell *cell, uint16_t read_current
 void get_cells_voltage(struct battery_cell *cell, uint16_t *adc_voltage_arr){
 	for(int8_t i = 0; i < sizeof(cell); i++){
 		HAL_GPIO_WritePin(GPIOB, cell[i].relay_pin, GPIO_PIN_SET);//Active low
+		HAL_Delay(3);
 		cell[i].voltage = adc_voltage_arr[i];
 	}
 }
@@ -126,7 +128,7 @@ void switch_charging_state(struct battery_cell *cell){
 }
 
 void battery_pre_charge(struct battery_cell cell){
-	open_relays(); //For safe switching
+	open_relays(); //For safe switching could be changed in the future
 	HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_RESET);//Close pre charge relay
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
 }
@@ -143,10 +145,10 @@ void battery_constant_voltage(struct battery_cell cell){
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
 }
 
-void charge_loop(struct battery_cell *cell, uint16_t *adc_voltage_arr, uint16_t read_current){
-	get_cells_voltage(cell, adc_voltage_arr);
-	get_cells_charging_current(cell, read_current);
-	get_cells_state(cell);
-	switch_charging_state(cell);
+void charge_loop(struct battery_cell *cells, uint16_t *adc_voltage_arr, uint16_t read_current){
+	get_cells_voltage(cells, adc_voltage_arr);
+	get_cells_charging_current(cells, read_current);
+	get_cells_state(cells);
+	switch_charging_state(cells);
 }
 
