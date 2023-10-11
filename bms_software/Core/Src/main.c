@@ -59,7 +59,7 @@ uint32_t adc_value[4];
 
 //ADC values for all channels
 uint16_t ch1_adc_value = 0;
-uint16_t ch2_adc_value = 0;
+uint16_t ch2_adc_value = 0	;
 uint16_t ch4_adc_value = 0;
 uint16_t charge_loop_counter = 0;
 uint8_t charge_loop_delay = 30; //3 sec
