@@ -60,7 +60,7 @@ uint32_t adc_value[4];
 uint16_t charge_loop_counter = 0;
 uint8_t charge_loop_delay = 20; //2 sec
 
-struct battery_cell cells[2];
+struct battery_cell cells[1]; //only charge one cell
 
 //Used for testing current reading implementation
 float mAmp = 0;
