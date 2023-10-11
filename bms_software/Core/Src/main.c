@@ -57,14 +57,8 @@ uint16_t cell_voltage = 0;
 // Global array with three ADC channels
 uint32_t adc_value[4];
 
-//ADC values for all channels
-const uint8_t cell1_adc_voltage_ix= 0;
-const uint8_t cell2_adc_voltage_ix = 1;	;
-const uint8_t adc_pre_voltage_ix = 2;
-const uint8_t adc_post_voltage_ix = 3;
-
 uint16_t charge_loop_counter = 0;
-uint8_t charge_loop_delay = 10; //3 sec
+uint8_t charge_loop_delay = 20; //2 sec
 
 struct battery_cell cells[2];
 
@@ -92,6 +86,7 @@ static void MX_TIM9_Init(void);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	charge_loop_counter++;
 }
+
 
 
 /* USER CODE END 0 */
@@ -136,8 +131,6 @@ int main(void)
 
   // Start ADC with DMA
   HAL_ADC_Start_DMA(&hadc1, adc_value, 4);
-  uint32_t *voltage_adc[2] = {&adc_value[cell1_adc_voltage_ix], &adc_value[cell2_adc_voltage_ix]};
-  uint32_t *current_adc[2] = {&adc_value[adc_pre_voltage_ix], &adc_value[adc_post_voltage_ix]};
 
 
   battery_cell_init(cells);
@@ -148,9 +141,10 @@ int main(void)
   while (1)
   {
 	  if(charge_loop_counter >= charge_loop_delay){
-		  charge_loop(cells, voltage_adc, current_adc);
+		  charge_loop(cells, adc_value);
 		  charge_loop_counter = 0;
 	  }
+
 
     /* USER CODE END WHILE */
 

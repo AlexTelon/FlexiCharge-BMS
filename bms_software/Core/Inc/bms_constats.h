@@ -22,8 +22,8 @@
 #define MILLI 1000
 
 //Charging levels
-#define PRE_CHARGE_VOLTAGE 2.8
-#define CONSTANT_VOLTAGE 4.1
+#define PRE_CHARGE_VOLTAGE 2800
+#define CONSTANT_VOLTAGE 4100
 #define FULL_CHARGE_CURRENT 75 //The current in mA going to the cell at full charge
 #define PRE_CHARGE_CURRENT 150 //20% of the batteries capacity
 
