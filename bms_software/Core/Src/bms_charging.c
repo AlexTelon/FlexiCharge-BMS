@@ -43,15 +43,15 @@ void open_relays(){
 
 //check charging current to individual cell, needs to know which cell is currently
 //being charged
-void get_cells_charging_current(struct battery_cell *cell, uint16_t read_current){
-
-	read_current /= nbr_charging_cells;
+void get_cells_charging_current(struct battery_cell *cell, uint16_t *pre_adc, uint16_t *post_adc){
 
 	for(int8_t i = 0; i < sizeof(cell); i++){
 		if(cell[i].is_charging){ //should only read charging current if the cell i charging
 			HAL_GPIO_WritePin(GPIOB, cell[i].relay_pin, GPIO_PIN_RESET);//Active low
 			HAL_Delay(3);//Give time for the adc to read
-			cell[i].charging_current = read_current;
+
+			uint16_t voltage_drop = adc_resistor_drop(*pre_adc, *post_adc);
+			cell[i].charging_current = convert_adc_to_mAmp(voltage_drop);
 		}
 		else cell[i].charging_current = 0;
 	}
@@ -145,9 +145,9 @@ void battery_constant_voltage(struct battery_cell cell){
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
 }
 
-void charge_loop(struct battery_cell *cells, uint16_t *adc_voltage_arr, uint16_t read_current){
+void charge_loop(struct battery_cell *cells, uint16_t *adc_voltage_arr, uint16_t *adc_current){
 	get_cells_voltage(cells, adc_voltage_arr);
-	get_cells_charging_current(cells, read_current);
+	get_cells_charging_current(cells, &adc_current[0], &adc_current[1]);
 	get_cells_state(cells);
 	switch_charging_state(cells);
 }
