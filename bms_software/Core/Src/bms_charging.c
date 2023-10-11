@@ -8,25 +8,18 @@
 #include "bms_charging.h"
 
 void battery_cell_init(struct battery_cell *cells){
-	//The cells that we are charging
-	struct battery_cell cell1;
-	struct battery_cell cell2; //Not used for charging one cell
 
-	cell1.charging_current = 0;
-	cell1.voltage = 0;
-	cell1.is_charging = true; // Because we only charge one cell for now
-	cell1.relay_pin = cell1_relay_Pin;
-	cell1.state = no_charge;
-	cell1.old_state = no_charge;
+	for(uint8_t i = 0; i < sizeof(cells); i++){
+		struct battery_cell cell;
+		cell.charging_current = 0;
+		cell.voltage = 0;
+		cell.is_charging = true;
+		cell.relay_pin = cell1_relay_Pin;
+		cell.state = no_charge;
+		cell.old_state = no_charge;
 
-	cell2.charging_current = 0;
-	cell2.voltage = 0;
-	cell2.is_charging = false;
-	cell2.relay_pin = cell1_relay_Pin;
-	cell2.state = no_charge;
-	cell2.old_state = no_charge;
-
-	cells[0] = cell1;
+		cells[i] = cell;
+	}
 }
 
 //turns off/opens all relays
@@ -81,20 +74,7 @@ void get_cells_state(struct battery_cell *cell){
 	}
 }
 
-void choose_charging_cells(struct battery_cell *cell){//Not finished
-	uint8_t charging_cell = 99;
-	for(uint8_t i = 0; i < sizeof(cell) - 1; i++){
-		if(cell[i].state < cell[i + 1].state){
-			charging_cell = i;
-		}
-		else if (cell[i].state > cell[i + 1].state){
-			charging_cell = i+1;
-		}
-		//else the cells are in the same state
-
-		else charging_cell = 99;
-	}
-}
+void choose_charging_cells(struct battery_cell *cell);
 
 void switch_charging_state(struct battery_cell *cell){
 
