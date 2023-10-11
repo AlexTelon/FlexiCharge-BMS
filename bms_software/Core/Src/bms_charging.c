@@ -7,10 +7,6 @@
 
 #include "bms_charging.h"
 
-uint8_t nbr_charging_cells = 0;//Not used
-
-
-
 void battery_cell_init(struct battery_cell *cells){
 	//The cells that we are charging
 	struct battery_cell cell1;
@@ -31,11 +27,11 @@ void battery_cell_init(struct battery_cell *cells){
 	cell2.old_state = no_charge;
 
 	cells[0] = cell1;
-	//cells[1] = cell2;
 }
 
+//turns off/opens all relays
 void open_relays(){
-	//turns off/opens all relays
+
 	HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin, GPIO_PIN_SET);//Active low
 	HAL_GPIO_WritePin(GPIOB, cell2_relay_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_SET); //pre charge relay
