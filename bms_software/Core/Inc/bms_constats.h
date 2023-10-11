@@ -18,7 +18,7 @@
 #define VOLTAGE_SCALAR 1272
 
 // The resistance in the charging circuit for reading the current to the batteries
-#define CHARGING_RESISTANCE 5.4
+#define CHARGING_RESISTANCE 1
 #define MILLI 1000
 
 //Charging levels
