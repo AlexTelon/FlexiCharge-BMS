@@ -8,6 +8,9 @@
 #ifndef INC_BMS_SOC_ESTIMATION_H_
 #define INC_BMS_SOC_ESTIMATION_H_
 
+// Two constants to be used in the calculation
+#define VOLTAGE_HIGH 0 // Dummy
+#define VOLTAGE_LOW 0 // Dummy
 
 
 #endif /* INC_BMS_SOC_ESTIMATION_H_ */
