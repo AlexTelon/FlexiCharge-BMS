@@ -58,9 +58,11 @@ uint16_t cell_voltage = 0;
 uint32_t adc_value[4];
 
 //ADC values for all channels
-uint16_t ch1_adc_value = 0;
-uint16_t ch2_adc_value = 0	;
-uint16_t ch4_adc_value = 0;
+const uint8_t cell1_adc_voltage_ix= 0;
+const uint8_t cell2_adc_voltage_ix = 1;	;
+const uint8_t adc_pre_voltage_ix = 2;
+const uint8_t adc_post_voltage_ix = 3;
+
 uint16_t charge_loop_counter = 0;
 uint8_t charge_loop_delay = 30; //3 sec
 
@@ -128,7 +130,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   // Start timer for ADC Interrupt (10Hz)
   HAL_TIM_Base_Start(&htim3);
-  HAL_TIM_Base_Start_IT(&htim9);
+  HAL_TIM_Base_Start_IT(&htim9); //Timer for interrupt
 
   // Start ADC with DMA
   HAL_ADC_Start_DMA(&hadc1, adc_value, 4);
