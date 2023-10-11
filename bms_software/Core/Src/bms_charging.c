@@ -42,7 +42,7 @@ void open_relays(){
 }
 
 //check charging current to individual cell, needs to know which cell is currently
-//being charged
+//being charged, currently only one cell should be checked
 void get_cells_charging_current(struct battery_cell *cell, uint16_t *pre_adc, uint16_t *post_adc){
 
 	for(int8_t i = 0; i < sizeof(cell); i++){

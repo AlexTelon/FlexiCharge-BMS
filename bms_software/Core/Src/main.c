@@ -134,6 +134,8 @@ int main(void)
 
   // Start ADC with DMA
   HAL_ADC_Start_DMA(&hadc1, adc_value, 4);
+  uint16_t voltage_adc[2] = {&adc_value[cell1_adc_voltage_ix], &adc_value[cell1_adc_voltage_ix]};
+  uint16_t current_adc[2] = {&adc_value[adc_pre_voltage_ix], &adc_value[adc_post_voltage_ix]};
   /* USER CODE END 2 */
 
   /* Infinite loop */
