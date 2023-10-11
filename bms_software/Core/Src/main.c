@@ -66,7 +66,7 @@ const uint8_t adc_post_voltage_ix = 3;
 uint16_t charge_loop_counter = 0;
 uint8_t charge_loop_delay = 30; //3 sec
 
-struct battery_cell *cells;
+struct battery_cell cells[2];
 
 //Used for testing current reading implementation
 float mAmp = 0;
