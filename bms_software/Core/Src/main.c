@@ -64,7 +64,7 @@ const uint8_t adc_pre_voltage_ix = 2;
 const uint8_t adc_post_voltage_ix = 3;
 
 uint16_t charge_loop_counter = 0;
-uint8_t charge_loop_delay = 30; //3 sec
+uint8_t charge_loop_delay = 10; //3 sec
 
 struct battery_cell cells[2];
 
@@ -136,8 +136,8 @@ int main(void)
 
   // Start ADC with DMA
   HAL_ADC_Start_DMA(&hadc1, adc_value, 4);
-  uint16_t voltage_adc[2] = {&adc_value[cell1_adc_voltage_ix], &adc_value[cell1_adc_voltage_ix]};
-  uint16_t current_adc[2] = {&adc_value[adc_pre_voltage_ix], &adc_value[adc_post_voltage_ix]};
+  uint32_t *voltage_adc[2] = {&adc_value[cell1_adc_voltage_ix], &adc_value[cell2_adc_voltage_ix]};
+  uint32_t *current_adc[2] = {&adc_value[adc_pre_voltage_ix], &adc_value[adc_post_voltage_ix]};
 
 
   battery_cell_init(cells);
@@ -147,8 +147,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(charge_loop_counter == charge_loop_delay){
-		  HAL_GPIO_TogglePin(GPIOA, LD2_Pin);
+	  if(charge_loop_counter >= charge_loop_delay){
+		  charge_loop(cells, voltage_adc, current_adc);
 		  charge_loop_counter = 0;
 	  }
 
