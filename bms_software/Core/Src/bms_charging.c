@@ -61,7 +61,7 @@ void get_cells_voltage(struct battery_cell *cell, uint16_t *adc_voltage_arr){
 	for(int8_t i = 0; i < sizeof(cell); i++){
 		HAL_GPIO_WritePin(GPIOB, cell[i].relay_pin, GPIO_PIN_SET);//Active low
 		HAL_Delay(3);
-		cell[i].voltage = adc_voltage_arr[i];
+		cell[i].voltage = convert_rawADC_to_voltage(adc_voltage_arr[i]);
 	}
 }
 
