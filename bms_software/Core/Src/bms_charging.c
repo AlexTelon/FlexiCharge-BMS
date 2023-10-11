@@ -103,8 +103,7 @@ void choose_charging_cells(struct battery_cell *cell){//Not finished
 void switch_charging_state(struct battery_cell *cell){
 
 	for(uint8_t i = 0; i < sizeof(cell); i++){
-
-		if(cell[i].state != cell[i].old_state){
+		if(cell[i].state != cell[i].old_state && cell[i].is_charging){
 			switch (cell[i].state)
 			{
 				case pre_charge:
