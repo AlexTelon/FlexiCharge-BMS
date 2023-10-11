@@ -21,12 +21,14 @@ void battery_cell_init(struct battery_cell *cells){
 	cell1.is_charging = true; // Because we only charge one cell for now
 	cell1.relay_pin = cell1_relay_Pin;
 	cell1.state = no_charge;
+	cell1.old_state = no_charge;
 
 	cell2.charging_current = 0;
 	cell2.voltage = 0;
 	cell2.is_charging = false;
 	cell2.relay_pin = cell1_relay_Pin;
 	cell2.state = no_charge;
+	cell2.old_state = no_charge;
 
 	cells[0] = cell1;
 	//cells[1] = cell2;
@@ -103,26 +105,33 @@ void choose_charging_cells(struct battery_cell *cell){//Not finished
 void switch_charging_state(struct battery_cell *cell){
 
 	for(uint8_t i = 0; i < sizeof(cell); i++){
-		switch (cell[i].state)
-		{
-			case pre_charge:
-				battery_pre_charge(cell[i]);
-				break;
 
-			case constant_current:
-				battery_constant_current(cell[i]);
-				break;
+		if(cell[i].state != cell[i].old_state){
+			switch (cell[i].state)
+			{
+				case pre_charge:
+					battery_pre_charge(cell[i]);
+					cell[i].old_state = cell[i].state;
+					break;
 
-			case constant_voltage:
-				battery_constant_voltage(cell[i]);
-				break;
+				case constant_current:
+					battery_constant_current(cell[i]);
+					cell[i].old_state = cell[i].state;
+					break;
 
-			case no_charge:
-				open_relays();
-				break;
+				case constant_voltage:
+					battery_constant_voltage(cell[i]);
+					cell[i].old_state = cell[i].state;
+					break;
 
-			default:
-				open_relays();
+				case no_charge:
+					open_relays();
+					cell[i].old_state = cell[i].state;
+					break;
+
+				default:
+					open_relays();
+			}
 		}
 	}
 }
