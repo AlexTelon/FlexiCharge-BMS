@@ -110,7 +110,7 @@ void switch_charging_state(struct battery_cell *cell){
 }
 
 void battery_pre_charge(struct battery_cell cell){
-	open_relays(); //For safe switching could be changed in the future
+	open_relays();
 	HAL_GPIO_WritePin(GPIOA, pc_relay_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);
 }
