@@ -5,12 +5,14 @@
  * https://electronics.stackexchange.com/questions/401414/calculate-battery-state-of-charge-percentage
  */
 
+#include "main.h"
+
 #ifndef INC_BMS_SOC_ESTIMATION_H_
 #define INC_BMS_SOC_ESTIMATION_H_
 
 // Two constants to be used in the calculation
-#define VOLTAGE_HIGH 0 // Dummy
-#define VOLTAGE_LOW 0 // Dummy
+#define VOLTAGE_HIGH 4000 // Dummy
+#define VOLTAGE_LOW 3000 // Dummy
 
 // Function prototypes
 uint8_t soc_estimation(uint16_t current_voltage_level);
