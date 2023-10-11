@@ -58,8 +58,15 @@ void get_cells_state(struct battery_cell *cell){
 
 	for(int8_t i = 0; i < sizeof(cell); i++){
 
-		if(cell[i].voltage >= CONSTANT_VOLTAGE && cell[i].charging_current <= FULL_CHARGE_CURRENT)
-			cell[i].state = no_charge;
+		if(cell[i].voltage >= CONSTANT_VOLTAGE && cell[i].charging_current <= FULL_CHARGE_CURRENT){
+			if(cell[i].state == constant_voltage)
+				cell[i].state = fully_charged;
+
+			else if(cell[i].state == no_charge){
+				//Assign safe charging current to unlock measurement
+				cell[i].charging_current = ALMOST_FULL_CHARGE_CURRENT;
+			}
+		}
 
 		else if(cell[i].voltage < PRE_CHARGE_VOLTAGE)
 			cell[i].state = pre_charge;
@@ -94,6 +101,11 @@ void switch_charging_state(struct battery_cell *cell){
 
 				case constant_voltage:
 					battery_constant_voltage(cell[i]);
+					cell[i].old_state = cell[i].state;
+					break;
+
+				case fully_charged:
+					open_relays();
 					cell[i].old_state = cell[i].state;
 					break;
 
