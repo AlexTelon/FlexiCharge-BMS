@@ -50,7 +50,7 @@ void get_cells_charging_current(struct battery_cell *cell, uint32_t *adc){
 			HAL_GPIO_WritePin(GPIOB, cell[i].relay_pin, GPIO_PIN_RESET);//Active low
 			HAL_Delay(3);//Give time for the adc to read
 
-			uint16_t voltage_drop = adc_resistor_drop(adc[2], adc[3]);
+			uint16_t voltage_drop = adc_resistor_drop(adc[2], adc[3]); //Ugly
 			cell[i].charging_current = convert_adc_to_mAmp(voltage_drop);
 		}
 		else cell[i].charging_current = 0;
@@ -61,7 +61,7 @@ void get_cells_voltage(struct battery_cell *cell, uint32_t *adc){
 	for(int8_t i = 0; i < 1; i++){
 		HAL_GPIO_WritePin(GPIOB, cell[i].relay_pin, GPIO_PIN_SET);//Active low
 		HAL_Delay(3);
-		cell[i].voltage = convert_rawADC_to_voltage(adc[0]);
+		cell[i].voltage = convert_rawADC_to_voltage(adc[0]);//Ugly
 	}
 }
 
@@ -145,7 +145,7 @@ void battery_constant_voltage(struct battery_cell cell){
 	HAL_GPIO_WritePin(GPIOB, cell.relay_pin, GPIO_PIN_RESET);//Close relay for cell
 }
 
-void charge_loop(struct battery_cell *cells, uint32_t *adc){
+void charge_loop(struct battery_cell *cells, uint32_t *adc){//Ugly to only use one array for both voltage and current
 	get_cells_voltage(cells, adc);
 	get_cells_charging_current(cells, adc);
 	get_cells_state(cells);
