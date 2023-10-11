@@ -14,7 +14,7 @@ uint8_t nbr_charging_cells = 0;//Not used
 void battery_cell_init(struct battery_cell *cells){
 	//The cells that we are charging
 	struct battery_cell cell1;
-	struct battery_cell cell2;
+	struct battery_cell cell2; //Not used for charging one cell
 
 	cell1.charging_current = 0;
 	cell1.voltage = 0;
@@ -51,7 +51,7 @@ void get_cells_charging_current(struct battery_cell *cell, uint32_t *adc){
 			HAL_Delay(3);//Give time for the adc to read
 
 			uint16_t voltage_drop = adc_resistor_drop(adc[2], adc[3]); //Ugly
-			cell[i].charging_current = convert_adc_to_mAmp(voltage_drop);
+			cell[i].charging_current = convert_adc_to_mAmp(voltage_drop) * CURRENT_MULTIPLIER;
 		}
 		else cell[i].charging_current = 0;
 	}
