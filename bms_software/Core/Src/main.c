@@ -87,8 +87,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	charge_loop_counter++;
 }
 
-
-
 /* USER CODE END 0 */
 
 /**
@@ -144,8 +142,6 @@ int main(void)
 		  charge_loop(cells, adc_value);
 		  charge_loop_counter = 0;
 	  }
-
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -240,7 +236,7 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_0;
   sConfig.Rank = 1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_28CYCLES;
+  sConfig.SamplingTime = ADC_SAMPLETIME_56CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -429,10 +425,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin|cc_relay_Pin|cell2_relay_Pin|cv_relay_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, cell1_relay_Pin|cc_relay_Pin|cell2_relay_Pin|cv_relay_Pin
+                          |cv_relay2_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(pc_relay_GPIO_Port, pc_relay_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, pc_relay_Pin|pc_relay2_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -440,15 +437,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD2_Pin pc_relay_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin|pc_relay_Pin;
+  /*Configure GPIO pins : LD2_Pin pc_relay_Pin pc_relay2_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin|pc_relay_Pin|pc_relay2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : cell1_relay_Pin cc_relay_Pin cell2_relay_Pin cv_relay_Pin */
-  GPIO_InitStruct.Pin = cell1_relay_Pin|cc_relay_Pin|cell2_relay_Pin|cv_relay_Pin;
+  /*Configure GPIO pins : cell1_relay_Pin cc_relay_Pin cell2_relay_Pin cv_relay_Pin
+                           cv_relay2_Pin */
+  GPIO_InitStruct.Pin = cell1_relay_Pin|cc_relay_Pin|cell2_relay_Pin|cv_relay_Pin
+                          |cv_relay2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

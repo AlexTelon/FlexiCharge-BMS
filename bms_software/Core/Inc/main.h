@@ -81,6 +81,8 @@ void Error_Handler(void);
 #define cell2_relay_GPIO_Port GPIOB
 #define pc_relay_Pin GPIO_PIN_8
 #define pc_relay_GPIO_Port GPIOA
+#define pc_relay2_Pin GPIO_PIN_9
+#define pc_relay2_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14
@@ -89,6 +91,8 @@ void Error_Handler(void);
 #define SWO_GPIO_Port GPIOB
 #define cv_relay_Pin GPIO_PIN_4
 #define cv_relay_GPIO_Port GPIOB
+#define cv_relay2_Pin GPIO_PIN_5
+#define cv_relay2_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

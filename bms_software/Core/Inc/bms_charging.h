@@ -24,7 +24,7 @@ enum charging_state{
 
 struct battery_cell {
 	uint16_t voltage; //Cells voltage
-	uint16_t charging_current; //Charging current in mA flowing to the cell
+	float charging_current; //Charging current in mA flowing to the cell
 	uint16_t relay_pin;
 	bool is_charging;
 	enum charging_state state; //The cells charging state
